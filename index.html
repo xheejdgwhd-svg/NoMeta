@@ -1,238 +1,248 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoMeta</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoMeta</title>
 
-    <link rel="icon" type="image/x-icon" href="/icon2025.ico">
+<link rel="icon" type="image/x-icon" href="/icon2025.ico">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #0c0c0f;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
+<style>
 
-        .tg-link {
-            position: fixed;
-            top: 18px;
-            left: 26px;
-            font-size: 20px;
-            font-weight: 700;
-            color: rgba(255,255,255,0.75);
-            text-decoration: none;
-            z-index: 9999;
-            transition: 0.2s ease;
-            text-shadow: 0 0 8px rgba(255,255,255,0.2);
-        }
+body {
+    margin: 0;
+    padding: 0;
+    background: #0c0c0f;
+    font-family: Arial, sans-serif;
+    color: white;
+}
 
-        .tg-link:hover {
-            color: white;
-            text-shadow: 0 0 15px rgba(255,255,255,0.45);
-        }
+.header {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+.header h1 {
+    font-size: 70px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: white;
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+}
 
-        .header {
-            text-align: center;
-            margin-top: 40px;
-            margin-bottom: 20px;
-        }
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
+    background-size: 3px 3px;
+    opacity: 0.05;
+    pointer-events: none;
+}
 
-        .header h1 {
-            font-size: 70px;
-            font-weight: 900;
-            letter-spacing: 4px;
-            color: white;
-            text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
-        }
+/* --------------------------------------
+   CHAT BLOCK STYLE
+--------------------------------------- */
 
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
-            background-size: 3px 3px;
-            opacity: 0.05;
-            pointer-events: none;
-            z-index: -1;
-        }
+.chat-block {
+    width: 92%;
+    max-width: 1100px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    margin: 40px auto;
+    padding: 35px 45px;
+    border-radius: 18px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 22px rgba(255,255,255,0.05);
+}
 
-        .dialog-block {
-            width: 90%;
-            max-width: 900px;
-            margin: 50px auto 40px;
-            padding: 30px;
-            background: rgba(255,255,255,0.03);
-            border: 2px solid rgba(255,255,255,0.12);
-            border-radius: 18px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 0 22px rgba(255,255,255,0.05);
-        }
+.section-title-bad {
+    font-size: 32px;
+    font-weight: 900;
+    color: #ff5757;
+    margin-bottom: 25px;
+}
+.section-title-good {
+    font-size: 32px;
+    font-weight: 900;
+    color: #5eff5e;
+    margin: 35px 0 25px 0;
+}
 
-        .dialog-title-bad {
-            font-size: 32px;
-            font-weight: 900;
-            color: #ff4a4a;
-            margin-bottom: 25px;
-        }
+.row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 18px;
+}
 
-        .dialog-title-good {
-            font-size: 32px;
-            font-weight: 900;
-            color: #34ff62;
-            margin: 45px 0 25px 0;
-        }
+.role {
+    width: 110px;
+    opacity: 0.7;
+}
 
-        .dialog-row {
-            display: grid;
-            grid-template-columns: 120px 1fr 70px;
-            align-items: center;
-            margin: 10px 0;
-        }
+.message {
+    background: #1d2333;
+    padding: 10px 16px;
+    border-radius: 10px;
+    max-width: 520px;
+    color: white;
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
 
-        .dialog-user {
-            opacity: .85;
-            font-size: 15px;
-        }
+.time {
+    margin-left: auto;
+    opacity: 0.6;
+    font-size: 13px;
+}
 
-        .dialog-bubble {
-            background: #1f2537;
-            padding: 10px 18px;
-            border-radius: 12px;
-            color: #dbe5ff;
-            font-size: 15px;
-            box-shadow: 0 0 10px rgba(255,255,255,0.05);
-            width: fit-content;
-            max-width: 100%;
-        }
+.gray-msg {
+    opacity: 0.5;
+    background: transparent !important;
+    padding-left: 0;
+}
 
-        /* ⬅ новый сероватый текст */
-        .dialog-system {
-            color: rgba(200,200,200,0.55);
-            font-size: 15px;
-            font-style: italic;
-            margin-left: 10px;
-        }
+/* --------------------------------------
+   GLOW DIVIDER
+--------------------------------------- */
 
-        .dialog-time {
-            opacity: .45;
-            font-size: 14px;
-            text-align: right;
-        }
+.glow-divider {
+    width: 100%;
+    height: 3px;
+    margin: 45px 0 10px 0;
+    border-radius: 50px;
 
-        .info-box {
-            width: 90%;
-            max-width: 900px;
-            margin: 40px auto 0;
-            padding: 30px 35px;
-            background: rgba(255,255,255,0.05);
-            border: 2px solid rgba(255,255,255,0.12);
-            border-radius: 18px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 0 22px rgba(255,255,255,0.05);
-            line-height: 1.7;
-            font-size: 17px;
-        }
+    background: linear-gradient(
+        to right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.35) 50%,
+        rgba(255,255,255,0) 100%
+    );
 
-        .info-box h2 {
-            margin: 0 0 18px 0;
-            font-size: 32px;
-            font-weight: 900;
-            text-shadow: 0 0 10px rgba(255,255,255,0.2);
-        }
+    box-shadow: 0 0 18px rgba(255,255,255,0.25);
 
-        .info-box p, .info-box li {
-            opacity: 0.95;
-        }
+    opacity: 0;
+    animation: dividerFade 1.2s ease forwards;
+}
 
-        .site-footer {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 14px;
-            margin-top: 60px;
-            padding-bottom: 35px;
-            letter-spacing: 0.5px;
-            user-select: none;
-        }
-    </style>
+@keyframes dividerFade {
+    from { opacity: 0; transform: scaleX(0.7); }
+    to   { opacity: 1; transform: scaleX(1); }
+}
+
+/* --------------------------------------
+   INFO BOX
+--------------------------------------- */
+
+.info-box {
+    width: 90%;
+    max-width: 900px;
+    margin: 70px auto;
+    padding: 30px 35px;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 22px rgba(255,255,255,0.05);
+    line-height: 1.7;
+    font-size: 17px;
+}
+.info-box h2 {
+    margin: 0 0 18px 0;
+    font-size: 32px;
+    font-weight: 900;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+.site-footer {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    margin-top: 60px;
+    padding-bottom: 35px;
+    user-select: none;
+}
+
+</style>
 </head>
 <body>
 
 <div class="stars"></div>
 
-<a href="https://t.me/tveak" class="tg-link" target="_blank">TG: @tveak</a>
+<div class="header"><h1>NoMeta</h1></div>
 
-<div class="header">
-    <h1>NoMeta</h1>
+<!-- CHAT BLOCK -->
+<div class="chat-block">
+
+    <div class="section-title-bad">Плохо:</div>
+
+    <div class="row">
+        <div class="role">Вы</div>
+        <div class="message">Привет</div>
+        <div class="time">12:32:12</div>
+    </div>
+
+    <div class="row">
+        <div class="role">Ваш коллега</div>
+        <div class="message">Привет</div>
+        <div class="time">12:32:15</div>
+    </div>
+
+    <div class="row">
+        <div class="role"></div>
+        <div class="message gray-msg">…ждёт, пока вы формулируете вопрос…</div>
+        <div class="time"></div>
+    </div>
+
+    <div class="row">
+        <div class="role">Вы</div>
+        <div class="message">Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…</div>
+        <div class="time">12:34:01</div>
+    </div>
+
+    <div class="row">
+        <div class="role">Ваш коллега</div>
+        <div class="message">Ага, можешь сделать так-то…</div>
+        <div class="time">12:35:21</div>
+    </div>
+
+    <!-- GLOW DIVIDER HERE -->
+    <div class="glow-divider"></div>
+
+    <div class="section-title-good">Хорошо:</div>
+
+    <div class="row">
+        <div class="role">Вы</div>
+        <div class="message">Привет. Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…</div>
+        <div class="time">12:32:12</div>
+    </div>
+
+    <div class="row">
+        <div class="role">Ваш коллега</div>
+        <div class="message">Ага, можешь сделать так-то…</div>
+        <div class="time">12:33:32</div>
+    </div>
+
 </div>
 
-<div class="dialog-block">
-
-    <div class="dialog-title-bad">Плохо:</div>
-
-    <div class="dialog-row">
-        <div class="dialog-user">Вы</div>
-        <div class="dialog-bubble">Привет</div>
-        <div class="dialog-time">12:32:12</div>
-    </div>
-
-    <div class="dialog-row">
-        <div class="dialog-user">Ваш коллега</div>
-        <div class="dialog-bubble">Привет</div>
-        <div class="dialog-time">12:32:15</div>
-    </div>
-
-    <div class="dialog-row">
-        <div class="dialog-user"></div>
-        <div class="dialog-system">…ждёт, пока вы формулируете вопрос…</div>
-        <div class="dialog-time"></div>
-    </div>
-
-    <div class="dialog-row">
-        <div class="dialog-user">Вы</div>
-        <div class="dialog-bubble">Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…</div>
-        <div class="dialog-time">12:34:01</div>
-    </div>
-
-    <div class="dialog-row">
-        <div class="dialog-user">Ваш коллега</div>
-        <div class="dialog-bubble">Ага, можешь сделать так-то…</div>
-        <div class="dialog-time">12:35:21</div>
-    </div>
-
-    <div class="dialog-title-good">Хорошо:</div>
-
-    <div class="dialog-row">
-        <div class="dialog-user">Вы</div>
-        <div class="dialog-bubble">Привет. Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…</div>
-        <div class="dialog-time">12:32:12</div>
-    </div>
-
-    <div class="dialog-row">
-        <div class="dialog-user">Ваш коллега</div>
-        <div class="dialog-bubble">Ага, можешь сделать так-то…</div>
-        <div class="dialog-time">12:33:32</div>
-    </div>
-
-</div>
-
+<!-- INFO TEXT -->
 <div class="info-box">
     <h2>Пожалуйста, не задавайте мета-вопросов в чате!</h2>
-
-    <p><b>Мета-вопрос</b> — это вопрос, который подразумевает другие вопросы...</p>
+    <p><b>Мета-вопрос</b> — это вопрос, который подразумевает другие вопросы, например:</p>
 
     <ul>
         <li>«Можно ли задать вопрос?»</li>
         <li>«Есть, кто разбирается в N?»</li>
-        <li>«А кто-нибудь проходил курс по тому-то?»</li>
+        <li>«А кто-нибудь проходил курс по тому-то? Есть вопрос по анализу текста…»</li>
         <li>«Ребят, есть вопросик по...»</li>
     </ul>
 
-    <p>Они тратят время! Просто задавайте вопрос сразу.</p>
+    <p>
+        — Они тратят время! И ваше, и других людей, которые пытаются помочь.  
+        Лучше сразу задавать вопрос — это экономит время всем.
+    </p>
 </div>
 
 <footer class="site-footer">
