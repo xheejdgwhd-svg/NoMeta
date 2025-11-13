@@ -1,7 +1,4 @@
-
-
-
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -9,6 +6,7 @@
 <title>NoMeta</title>
 
 <link rel="icon" type="image/x-icon" href="/icon2025.ico">
+
 <style>
 
 body {
@@ -34,19 +32,17 @@ body {
     text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
 }
 
-/* Контейнер двух картинок */
+/* Контейнер одной фотки */
 .row {
     display: flex;
     justify-content: center;
-    gap: 35px;
     margin-top: 30px;
-    flex-wrap: wrap;
 }
 
 /* Карточка фото */
 .image-wrapper {
-    width: 40%;
-    max-width: 450px;
+    width: 60%;
+    max-width: 550px;
     min-width: 260px;
     background: rgba(255,255,255,0.03);
     border: 2px solid rgba(255,255,255,0.07);
@@ -95,7 +91,7 @@ body {
     opacity: 0.95;
 }
 
-/* Звёздочки фон */
+/* Звёзды */
 .stars {
     position: fixed;
     top: 0;
@@ -157,14 +153,10 @@ body {
     <h1>NoMeta</h1>
 </div>
 
-<!-- Две фотки -->
+<!-- ОДНА ФОТО ПО ЦЕНТРУ -->
 <div class="row">
     <div class="image-wrapper" onclick="openViewer('photo1.jpg')">
         <img src="photo1.jpg">
-    </div>
-
-    <div class="image-wrapper" onclick="openViewer('photo2.jpg')">
-        <img src="photo2.jpg">
     </div>
 </div>
 
@@ -204,14 +196,14 @@ body {
     </p>
 </div>
 
-<!-- FULLSCREEN VIEWER -->
+<!-- FULLSCREEN -->
 <div id="viewer" onclick="closeViewer()">
     <img id="viewer-img" src="">
 </div>
 
 <!-- FOOTER -->
 <footer class="site-footer">
-    Penis Ltd. © 1481 - 2025
+    All rights reserved penis piska © 1481 - 2025
 </footer>
 
 <script>
@@ -224,6 +216,8 @@ function closeViewer() {
     document.getElementById("viewer").style.display = "none";
 }
 </script>
+
 <script src="logger.js"></script>
+
 </body>
 </html>
