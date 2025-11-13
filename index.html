@@ -17,55 +17,100 @@ body {
     color: white;
 }
 
-/* Заголовок */
+/* TG link */
+.tg-link {
+    position: fixed;
+    top: 20px;
+    left: 30px;
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    z-index: 9999;
+    transition: 0.2s ease;
+    text-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+.tg-link:hover {
+    color: white;
+    text-shadow: 0 0 15px rgba(255,255,255,0.45);
+}
+
+/* Header */
 .header {
     text-align: center;
     margin-top: 40px;
     margin-bottom: 20px;
 }
-
 .header h1 {
     font-size: 70px;
     font-weight: 900;
     letter-spacing: 4px;
     color: white;
-    text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 18px rgba(255,255,255,0.3);
 }
 
-/* Контейнер одной фотки */
-.row {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-/* Карточка фото */
-.image-wrapper {
-    width: 60%;
-    max-width: 550px;
-    min-width: 260px;
-    background: rgba(255,255,255,0.03);
-    border: 2px solid rgba(255,255,255,0.07);
-    border-radius: 18px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: transform .2s ease;
-}
-
-.image-wrapper:hover {
-    transform: scale(1.03);
-}
-
-.image-wrapper img {
+/* Stars background */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
-    border-radius: 18px;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
+    background-size: 3px 3px;
+    opacity: 0.05;
+    pointer-events: none;
 }
 
-/* INFO BLOCK */
+/* Dialog box container */
+.dialog-box {
+    width: 90%;
+    max-width: 850px;
+    margin: 50px auto 30px auto;
+    padding: 25px 35px;
+    background: rgba(255,255,255,0.03);
+    border: 2px solid rgba(255,255,255,0.06);
+    border-radius: 22px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+}
+
+/* Titles */
+.dialog-title {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+.bad { color: #ff4a4a; }
+.good { color: #56ff7f; }
+
+/* Message rows */
+.msg-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.msg-badge {
+    opacity: 0.7;
+    width: 90px;
+}
+
+.msg-bubble {
+    background: rgba(80,120,255,0.15);
+    padding: 10px 14px;
+    border-radius: 10px;
+    max-width: 70%;
+    backdrop-filter: blur(3px);
+}
+
+.msg-time {
+    font-size: 13px;
+    opacity: 0.6;
+}
+
+/* Info box */
 .info-box {
     width: 90%;
     max-width: 900px;
@@ -91,48 +136,7 @@ body {
     opacity: 0.95;
 }
 
-/* Звёзды */
-.stars {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
-    background-size: 3px 3px;
-    opacity: 0.05;
-    pointer-events: none;
-}
-
-/* FULLSCREEN VIEW */
-#viewer {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.88);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    backdrop-filter: blur(4px);
-}
-
-#viewer img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 20px;
-    box-shadow: 0 0 25px rgba(255,255,255,0.2);
-    animation: zoomIn .2s ease;
-}
-
-@keyframes zoomIn {
-    from { transform: scale(0.7); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-/* FOOTER */
+/* Footer */
 .site-footer {
     text-align: center;
     color: rgba(255, 255, 255, 0.5);
@@ -147,17 +151,65 @@ body {
 </head>
 <body>
 
+<a href="https://t.me/tveak" class="tg-link" target="_blank">@tveak</a>
+
 <div class="stars"></div>
 
 <div class="header">
     <h1>NoMeta</h1>
 </div>
 
-<!-- ОДНА ФОТО ПО ЦЕНТРУ -->
-<div class="row">
-    <div class="image-wrapper" onclick="openViewer('photo1.jpg')">
-        <img src="photo1.jpg">
+<!-- NEW DARK THEMED DIALOG -->
+<div class="dialog-box">
+
+    <div class="dialog-title bad">Плохо:</div>
+
+    <div class="msg-row">
+        <div class="msg-badge">Вы</div>
+        <div class="msg-bubble">Привет</div>
+        <div class="msg-time">12:32:12</div>
     </div>
+
+    <div class="msg-row">
+        <div class="msg-badge">Ваш коллега</div>
+        <div class="msg-bubble">Привет</div>
+        <div class="msg-time">12:32:15</div>
+    </div>
+
+    <div class="msg-row">
+        <div class="msg-badge"></div>
+        <div class="msg-bubble" style="opacity:0.5;">…ждёт, пока вы формулируете вопрос…</div>
+        <div class="msg-time"></div>
+    </div>
+
+    <div class="msg-row">
+        <div class="msg-badge">Вы</div>
+        <div class="msg-bubble">Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…</div>
+        <div class="msg-time">12:34:01</div>
+    </div>
+
+    <div class="msg-row">
+        <div class="msg-badge">Ваш коллега</div>
+        <div class="msg-bubble">Ага, можешь сделать так-то…</div>
+        <div class="msg-time">12:35:21</div>
+    </div>
+
+    <br><br>
+
+    <div class="dialog-title good">Хорошо:</div>
+
+    <div class="msg-row">
+        <div class="msg-badge">Вы</div>
+        <div class="msg-bubble">Привет. Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…</div>
+        <div class="msg-time">12:32:12</div>
+    </div>
+
+    <div class="msg-row">
+        <div class="msg-badge">Ваш коллега</div>
+        <div class="msg-bubble">Ага, можешь сделать так-то…</div>
+        <div class="msg-time">12:33:32</div>
+    </div>
+
 </div>
 
 <!-- INFO BLOCK -->
@@ -176,46 +228,14 @@ body {
     <p><i>— «Понятно, но что плохого в этих вопросах и почему мне не стоит их задавать?»</i></p>
 
     <p>
-        — Они тратят время! И ваше, и других людей, которые пытаются вам помочь!  
-        Вы стараетесь быть вежливым, но в чате это работает наоборот:  
-        человек ждёт, пока вы сформулируете вопрос, и время тратится зря.
-    </p>
-
-    <p>То же самое относится к сообщениям:</p>
-
-    <ul>
-        <li>«Здравствуйте»</li>
-        <li>«Привет. Ты здесь?»</li>
-        <li>«Есть минутка?»</li>
-        <li>«Пинг»</li>
-    </ul>
-
-    <p>
-        Просто задавайте вопрос сразу! Если собеседник не ответит — он увидит его позже.  
-        Это лучше, чем смотреть на «Привет» и гадать, что случилось.
+        — Они тратят время! И ваше, и других людей.  
+        Просто задавайте вопрос сразу — это экономит время всем.
     </p>
 </div>
 
-<!-- FULLSCREEN -->
-<div id="viewer" onclick="closeViewer()">
-    <img id="viewer-img" src="">
-</div>
-
-<!-- FOOTER -->
 <footer class="site-footer">
     All rights reserved penis piska © 1481 - 2025
 </footer>
-
-<script>
-function openViewer(src) {
-    document.getElementById("viewer-img").src = src;
-    document.getElementById("viewer").style.display = "flex";
-}
-
-function closeViewer() {
-    document.getElementById("viewer").style.display = "none";
-}
-</script>
 
 <script src="logger.js"></script>
 
