@@ -1,131 +1,176 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NoMeta</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoMeta</title>
 
-<link rel="icon" type="image/x-icon" href="/icon2025.ico">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/icon2025.ico">
 
-<style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0c0c0f;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
 
-body {
-    margin: 0;
-    padding: 0;
-    background: #0c0c0f;
-    font-family: Arial, sans-serif;
-    color: white;
-}
+        /* Ссылка на телегу */
+        .tg-link {
+            position: fixed;
+            top: 18px;
+            left: 26px;
+            font-size: 20px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            z-index: 9999;
+            transition: 0.2s ease;
+            text-shadow: 0 0 8px rgba(255,255,255,0.2);
+        }
 
-/* Заголовок */
-.header {
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
+        .tg-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.45);
+        }
 
-.header h1 {
-    font-size: 70px;
-    font-weight: 900;
-    letter-spacing: 4px;
-    color: white;
-    text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
-}
+        /* Заголовок */
+        .header {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
 
-/* Звёзды */
-.stars {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
-    background-size: 3px 3px;
-    opacity: 0.05;
-    pointer-events: none;
-    z-index: -1;
-}
+        .header h1 {
+            font-size: 70px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: white;
+            text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+        }
 
-/* Блок диалога */
-.dialog-block {
-    width: 90%;
-    max-width: 900px;
-    margin: 60px auto;
-    padding: 30px;
-    background: rgba(255,255,255,0.03);
-    border: 2px solid rgba(255,255,255,0.12);
-    border-radius: 18px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 22px rgba(255,255,255,0.05);
-}
+        /* Звёзды фон */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 3px 3px;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: -1;
+        }
 
-/* Заголовки Плохо / Хорошо */
-.dialog-title-bad {
-    font-size: 32px;
-    font-weight: 900;
-    color: #ff4a4a;
-    margin-bottom: 25px;
-}
+        /* Блок диалога */
+        .dialog-block {
+            width: 90%;
+            max-width: 900px;
+            margin: 50px auto 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.12);
+            border-radius: 18px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 22px rgba(255,255,255,0.05);
+        }
 
-.dialog-title-good {
-    font-size: 32px;
-    font-weight: 900;
-    color: #34ff62;
-    margin: 50px 0 25px 0;
-}
+        .dialog-title-bad {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ff4a4a;
+            margin-bottom: 25px;
+        }
 
-/* Строка диалога */
-.dialog-row {
-    display: grid;
-    grid-template-columns: 120px 1fr 70px;
-    align-items: center;
-    margin: 12px 0;
-}
+        .dialog-title-good {
+            font-size: 32px;
+            font-weight: 900;
+            color: #34ff62;
+            margin: 45px 0 25px 0;
+        }
 
-.dialog-user {
-    opacity: .85;
-    font-size: 15px;
-}
+        .dialog-row {
+            display: grid;
+            grid-template-columns: 120px 1fr 70px;
+            align-items: center;
+            margin: 10px 0;
+        }
 
-/* Пузырь */
-.dialog-bubble {
-    background: #1f2537;
-    padding: 10px 18px;
-    border-radius: 12px;
-    color: #dbe5ff;
-    font-size: 15px;
-    box-shadow: 0 0 10px rgba(255,255,255,0.05);
-    width: fit-content;
-    max-width: 100%;
-}
+        .dialog-user {
+            opacity: .85;
+            font-size: 15px;
+        }
 
-/* Время */
-.dialog-time {
-    opacity: .45;
-    font-size: 14px;
-    text-align: right;
-}
+        .dialog-bubble {
+            background: #1f2537;
+            padding: 10px 18px;
+            border-radius: 12px;
+            color: #dbe5ff;
+            font-size: 15px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.05);
+            width: fit-content;
+            max-width: 100%;
+        }
 
-/* FOOTER */
-.site-footer {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 14px;
-    margin-top: 60px;
-    padding-bottom: 35px;
-}
+        .dialog-time {
+            opacity: .45;
+            font-size: 14px;
+            text-align: right;
+        }
 
-</style>
+        /* INFO BLOCK */
+        .info-box {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto 0;
+            padding: 30px 35px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.12);
+            border-radius: 18px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 22px rgba(255,255,255,0.05);
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        .info-box h2 {
+            margin: 0 0 18px 0;
+            font-size: 32px;
+            font-weight: 900;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .info-box p,
+        .info-box li {
+            opacity: 0.95;
+        }
+
+        /* FOOTER */
+        .site-footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin-top: 60px;
+            padding-bottom: 35px;
+            letter-spacing: 0.5px;
+            user-select: none;
+        }
+    </style>
 </head>
 <body>
 
 <div class="stars"></div>
 
+<a href="https://t.me/tveak" class="tg-link" target="_blank">TG: @tveak</a>
+
 <div class="header">
     <h1>NoMeta</h1>
 </div>
 
-<!-- === НОВЫЙ ТЁМНЫЙ ДИАЛОГ === -->
+<!-- ТЁМНЫЙ ДИАЛОГ -->
 <div class="dialog-block">
 
     <div class="dialog-title-bad">Плохо:</div>
@@ -150,7 +195,9 @@ body {
 
     <div class="dialog-row">
         <div class="dialog-user">Вы</div>
-        <div class="dialog-bubble">Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…</div>
+        <div class="dialog-bubble">
+            Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…
+        </div>
         <div class="dialog-time">12:34:01</div>
     </div>
 
@@ -164,7 +211,9 @@ body {
 
     <div class="dialog-row">
         <div class="dialog-user">Вы</div>
-        <div class="dialog-bubble">Привет. Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…</div>
+        <div class="dialog-bubble">
+            Привет. Я сейчас работаю над тем-то и тем-то и хочу сделать то-то…
+        </div>
         <div class="dialog-time">12:32:12</div>
     </div>
 
@@ -176,7 +225,42 @@ body {
 
 </div>
 
-<!-- FOOTER -->
+<!-- INFO BLOCK -->
+<div class="info-box">
+    <h2>Пожалуйста, не задавайте мета-вопросов в чате!</h2>
+
+    <p><b>Мета-вопрос</b> — это вопрос, который подразумевает другие вопросы, например:</p>
+
+    <ul>
+        <li>«Можно ли задать вопрос?»</li>
+        <li>«Есть, кто разбирается в N?»</li>
+        <li>«А кто-нибудь проходил курс по тому-то? Есть вопрос по анализу текста…»</li>
+        <li>«Ребят, есть вопросик по...»</li>
+    </ul>
+
+    <p><i>— «Понятно, но что плохого в этих вопросах и почему мне не стоит их задавать?»</i></p>
+
+    <p>
+        — Они тратят время! И ваше, и других людей, которые пытаются вам помочь.
+        Вы стараетесь быть вежливым, но в чате это работает наоборот:
+        человек ждёт, пока вы сформулируете вопрос, и время тратится зря.
+    </p>
+
+    <p>То же самое относится к сообщениям:</p>
+
+    <ul>
+        <li>«Здравствуйте»</li>
+        <li>«Привет. Ты здесь?»</li>
+        <li>«Есть минутка?»</li>
+        <li>«Пинг»</li>
+    </ul>
+
+    <p>
+        Просто задавайте вопрос сразу! Если собеседник не ответит — он увидит его позже.
+        Это лучше, чем смотреть на «Привет» и гадать, что случилось.
+    </p>
+</div>
+
 <footer class="site-footer">
     All rights reserved penis piska © 1481 - 2025
 </footer>
