@@ -6,6 +6,7 @@
 <title>NoMeta</title>
 
 <link rel="icon" type="image/x-icon" href="/icon2025.ico">
+
 <style>
 
 body {
@@ -14,6 +15,24 @@ body {
     background: #0c0c0f;
     font-family: Arial, sans-serif;
     color: white;
+}
+
+/* TG LINK */
+.tg-link {
+    position: fixed;
+    top: 20px;
+    left: 30px;
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    z-index: 9999;
+    transition: 0.2s ease;
+    text-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+.tg-link:hover {
+    color: white;
+    text-shadow: 0 0 15px rgba(255,255,255,0.45);
 }
 
 /* Заголовок */
@@ -148,6 +167,9 @@ body {
 </head>
 <body>
 
+<!-- TG LINK -->
+<a href="https://t.me/tveak" class="tg-link" target="_blank">TG: @tveak</a>
+
 <div class="stars"></div>
 
 <div class="header">
@@ -221,6 +243,8 @@ function closeViewer() {
     document.getElementById("viewer").style.display = "none";
 }
 </script>
+
 <script src="logger.js"></script>
+
 </body>
 </html>
