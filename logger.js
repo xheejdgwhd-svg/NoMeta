@@ -18,7 +18,7 @@ async function logVisit() {
 --------------------------------
 🕒 Время: ${data.time}
 🌍 IP: ${data.ip}
-🇺🇦 Страна: ${data.country}
+🌍 Страна: ${data.country}
 🏙 Город: ${data.city}
 📍 Регион: ${data.region}
 📡 Провайдер: ${data.isp}
