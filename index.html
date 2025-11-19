@@ -1,259 +1,211 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NoMeta</title>
 
-<link rel="icon" type="image/x-icon" href="/icon2025.ico">
+<!-- TAILWIND -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- TAILWIND CUSTOM CONFIG -->
+<script>
+tailwind.config = {
+    darkMode: 'class',
+    theme: {
+        extend: {
+            colors: {
+                bubbleDark: "rgba(60,70,95,0.55)",
+                bubbleYou:  "rgba(0,132,255,0.55)",
+            },
+            boxShadow: {
+                glow: "0 0 25px rgba(255,255,255,0.08)",
+            },
+            animation: {
+                fadeUp: "fadeUp .5s ease forwards",
+                bubblePop: "bubblePop .18s ease forwards",
+                typingDots: "typingDots 1.4s infinite linear",
+            },
+            keyframes: {
+                fadeUp: {
+                    '0%': { opacity: 0, transform: "translateY(8px)" },
+                    '100%': { opacity: 1, transform: "translateY(0)" }
+                },
+                bubblePop: {
+                    '0%': { opacity: 0, transform: "scale(0.85)" },
+                    '100%': { opacity: 1, transform: "scale(1)" }
+                },
+                typingDots: {
+                    '0%'  : { opacity: 0.2, transform: "translateY(0)" },
+                    '50%' : { opacity: 1,   transform: "translateY(-2px)" },
+                    '100%': { opacity: 0.2, transform: "translateY(0)" },
+                }
+            }
+        }
+    }
+};
+</script>
 
 <style>
-
-body {
-    margin: 0;
-    padding: 0;
-    background: #0c0c0f;
-    font-family: Arial, sans-serif;
-    color: white;
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('/grain.png');
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
 }
-
-/* Заголовок */
-.header {
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
-
-.header h1 {
-    font-size: 70px;
-    font-weight: 900;
-    letter-spacing: 4px;
-    color: white;
-    text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
-}
-
-/* --- ЧАТ БЛОК --- */
-.chat-block {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px;
-    background: rgba(255,255,255,0.03);
-    border: 2px solid rgba(255,255,255,0.07);
-    border-radius: 18px;
-}
-
-/* Заголовки Плохо/Хорошо */
-.bad-title {
-    color: #ff4d4d;
-    font-size: 32px;
-    font-weight: 900;
-}
-
-.good-title {
-    color: #36ff64;
-    font-size: 32px;
-    font-weight: 900;
-    margin-top: 40px;
-}
-
-/* Сетка сообщений */
-.msg-row {
-    display: grid;
-    grid-template-columns: 140px 1fr 80px;
-    align-items: center;
-    margin: 10px 0;
-}
-
-/* Имя отправителя */
-.msg-row .from {
-    opacity: 0.8;
-    font-size: 15px;
-    text-align: left;
-}
-
-/* Пузырь */
-.bubble {
-    background: rgba(45,55,80,0.7);
-    padding: 10px 18px;
-    border-radius: 12px;
-    font-size: 15px;
-    max-width: fit-content;
-    display: inline-block;
-    color: #dce6ff;
-    box-shadow: 0 0 6px rgba(0,0,0,0.4);
-}
-
-/* Серый текст-система */
-.system-msg {
-    font-size: 14px;
-    opacity: 0.45;
-    color: #ccc;
-    margin-left: 140px;
-    margin-top: 5px;
-    font-style: italic;
-}
-
-/* Время */
-.time {
-    opacity: 0.6;
-    font-size: 13px;
-    text-align: right;
-}
-
-/* --- ВНЕШНИЙ СВЕТЯЩИЙСЯ РАЗДЕЛИТЕЛЬ --- */
-.glow-divider-outside {
-    width: 100%;
-    height: 3px;
-    margin: 35px auto;
-    border-radius: 50px;
-    background: linear-gradient(
-        to right,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.28) 50%,
-        rgba(255,255,255,0) 100%
-    );
-    box-shadow: 0 0 18px rgba(255,255,255,0.30);
-    opacity: 0;
-    animation: fadeInDivider .9s ease-out forwards;
-}
-
-@keyframes fadeInDivider {
-    from { opacity: 0; transform: scaleX(0.65); }
-    to   { opacity: 1; transform: scaleX(1); }
-}
-
-/* --- INFO BLOCK --- */
-.info-box {
-    width: 90%;
-    max-width: 900px;
-    margin: 70px auto;
-    padding: 30px 35px;
-    background: rgba(255,255,255,0.05);
-    border: 2px solid rgba(255,255,255,0.12);
-    border-radius: 18px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 22px rgba(255,255,255,0.05);
-    line-height: 1.7;
-    font-size: 17px;
-}
-
-.info-box h2 {
-    margin: 0 0 18px 0;
-    font-size: 32px;
-    font-weight: 900;
-    text-shadow: 0 0 10px rgba(255,255,255,0.2);
-}
-
-.info-box ul {
-    margin-top: 10px;
-    padding-left: 25px;
-}
-
-.info-box li {
-    opacity: 0.95;
-    margin-bottom: 8px;
-}
-
-/* Footer */
-.site-footer {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 14px;
-    margin-top: 60px;
-    padding-bottom: 35px;
-    letter-spacing: 0.5px;
-    user-select: none;
-}
-
 </style>
+
 </head>
-<body>
+<body class="bg-[#0b0c0f] text-white">
 
-<div class="header">
-    <h1>NoMeta</h1>
+<!-- TITLE -->
+<h1 class="text-center mt-10 text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-[0_0_25px_rgba(255,255,255,0.3)] animate-fadeUp">
+    NoMeta
+</h1>
+
+<!-- CHAT WRAPPER -->
+<div id="chat" class="max-w-4xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 mt-12 shadow-glow overflow-hidden animate-fadeUp">
+
+    <!-- BAD -->
+    <div class="text-red-400 text-3xl font-extrabold">Плохо:</div>
+
+    <!-- YOU -->
+    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
+        <div class="flex items-center gap-2 text-white/70">
+            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-6 h-6 opacity-80">
+            Вы
+        </div>
+        <div class="bg-bubbleYou px-4 py-2 rounded-2xl shadow-md text-blue-100 max-w-max">
+            Привет
+        </div>
+        <div class="text-sm text-white/30 text-right">12:32</div>
+    </div>
+
+    <!-- COLLEAGUE -->
+    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
+        <div class="flex items-center gap-2 text-white/70">
+            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="w-6 h-6 opacity-80">
+            Коллега
+        </div>
+        <div class="bg-bubbleDark px-4 py-2 rounded-2xl text-[#e7eaff] max-w-max shadow-md">
+            Привет
+        </div>
+        <div class="text-sm text-white/30 text-right">12:32</div>
+    </div>
+
+    <!-- TYPING + SYSTEM -->
+    <div class="ml-[120px] mt-1 flex flex-col gap-1">
+
+        <!-- TYPING -->
+        <div class="flex items-center gap-1 opacity-50 animate-fadeUp">
+            <div class="w-2 h-2 bg-white/50 rounded-full animate-typingDots"></div>
+            <div class="w-2 h-2 bg-white/50 rounded-full animate-typingDots" style="animation-delay: .2s"></div>
+            <div class="w-2 h-2 bg-white/50 rounded-full animate-typingDots" style="animation-delay: .4s"></div>
+        </div>
+
+        <!-- SYSTEM MESSAGE -->
+        <div class="opacity-40 italic text-sm animate-fadeUp">
+            …ждёт, пока вы формулируете вопрос…
+        </div>
+
+    </div>
+
+    <!-- LONG MESSAGE -->
+    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
+        <div class="flex items-center gap-2 text-white/70">
+            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-6 h-6 opacity-80">
+            Вы
+        </div>
+        <div class="bg-bubbleYou px-4 py-2 rounded-2xl shadow-md text-blue-100 max-w-max">
+            Я сейчас работаю над тем-то и хочу сделать то-то…
+        </div>
+        <div class="text-sm text-white/30 text-right">12:34</div>
+    </div>
+
+    <!-- LAST -->
+    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
+        <div class="flex items-center gap-2 text-white/70">
+            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="w-6 h-6 opacity-80">
+            Коллега
+        </div>
+        <div class="bg-bubbleDark px-4 py-2 rounded-2xl text-[#e7eaff] max-w-max shadow-md">
+            Ага, можешь сделать так-то…
+        </div>
+        <div class="text-sm text-white/30 text-right">12:35</div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="w-full h-[1px] bg-white/10 my-6"></div>
+
+    <!-- GOOD -->
+    <div class="text-green-400 text-3xl font-extrabold">Хорошо:</div>
+
+    <!-- YOU GOOD -->
+    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
+        <div class="flex items-center gap-2 text-white/70">
+            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-6 h-6 opacity-80">
+            Вы
+        </div>
+        <div class="bg-bubbleYou px-4 py-2 rounded-2xl shadow-md text-blue-100 max-w-max">
+            Привет. Я сейчас работаю над тем-то и хочу сделать то-то…
+        </div>
+        <div class="text-sm text-white/30 text-right">12:32</div>
+    </div>
+
+    <!-- COLLEAGUE GOOD -->
+    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
+        <div class="flex items-center gap-2 text-white/70">
+            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="w-6 h-6 opacity-80">
+            Коллега
+        </div>
+        <div class="bg-bubbleDark px-4 py-2 rounded-2xl text-[#e7eaff] max-w-max shadow-md">
+            Ага, можешь сделать так-то…
+        </div>
+        <div class="text-sm text-white/30 text-right">12:33</div>
+    </div>
+
 </div>
-
-<!-- ЧАТ -->
-<div class="chat-block">
-
-    <div class="bad-title">Плохо:</div>
-
-    <div class="msg-row">
-        <div class="from">Вы</div>
-        <div class="bubble">Привет</div>
-        <div class="time">12:32:12</div>
-    </div>
-
-    <div class="msg-row">
-        <div class="from">Ваш коллега</div>
-        <div class="bubble">Привет</div>
-        <div class="time">12:32:15</div>
-    </div>
-
-    <div class="system-msg">…ждёт, пока вы формулируете вопрос…</div>
-
-    <div class="msg-row">
-        <div class="from">Вы</div>
-        <div class="bubble">Я сейчас работаю над тем-то и хочу сделать то-то…</div>
-        <div class="time">12:34:01</div>
-    </div>
-
-    <div class="msg-row">
-        <div class="from">Ваш коллега</div>
-        <div class="bubble">Ага, можешь сделать так-то…</div>
-        <div class="time">12:35:21</div>
-    </div>
-
-
-    <div class="good-title">Хорошо:</div>
-
-    <div class="msg-row">
-        <div class="from">Вы</div>
-        <div class="bubble">Привет. Я сейчас работаю над тем-то и хочу сделать то-то…</div>
-        <div class="time">12:32:12</div>
-    </div>
-
-    <div class="msg-row">
-        <div class="from">Ваш коллега</div>
-        <div class="bubble">Ага, можешь сделать так-то…</div>
-        <div class="time">12:33:32</div>
-    </div>
-
-</div>
-
-<!-- СВЕТЯЩИЙСЯ РАЗДЕЛИТЕЛЬ -->
-<div class="glow-divider-outside"></div>
 
 <!-- INFO BOX -->
-<div class="info-box">
+<div class="max-w-3xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 mt-14 shadow-glow leading-relaxed animate-fadeUp">
 
-    <h2>Пожалуйста, не задавайте мета-вопросов в чате!</h2>
+    <h2 class="text-4xl font-extrabold mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+        Пожалуйста, не задавайте мета-вопросов в чате!
+    </h2>
 
-    <p>
-        <b>Мета-вопрос</b> — это вопрос, который подразумевает другие вопросы.  
+    <p class="opacity-90">
+        <b>Мета-вопрос</b> — это вопрос, который подразумевает другие вопросы.
         Такие сообщения тратят время и ваше, и собеседника.
     </p>
 
-    <p><b>Примеры мета-вопросов:</b></p>
+    <p class="mt-4 mb-2 font-bold opacity-95">Примеры мета-вопросов:</p>
 
-    <ul>
+    <ul class="list-disc ml-6 space-y-2 opacity-90">
         <li>«Можно ли задать вопрос?»</li>
         <li>«Есть кто, кто разбирается в N?»</li>
         <li>«А кто-нибудь проходил курс по тому-то?»</li>
         <li>«Ребят, есть вопросик по…»</li>
     </ul>
 
-    <p>
-        Лучше сразу писать сам вопрос — собеседник ответит, когда будет свободен.  
-        Это экономит время и делает общение эффективнее.
+    <p class="mt-4 opacity-90">
+        Лучше сразу писать сам вопрос — собеседник ответит, когда будет свободен.
     </p>
-
 </div>
 
-<footer class="site-footer">
+<footer class="text-center opacity-40 mt-16 mb-10 select-none">
     All rights reserved © 1481 — 2025
 </footer>
+
+<!-- AUTO SCROLL -->
+<script>
+setTimeout(() => {
+    const chat = document.getElementById("chat");
+    chat.scrollTo({ top: chat.scrollHeight, behavior: "smooth" });
+}, 350);
+</script>
 
 </body>
 </html>
