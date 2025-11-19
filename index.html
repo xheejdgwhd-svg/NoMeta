@@ -96,22 +96,22 @@ body::before {
         <div class="text-sm text-white/30 text-right">12:32</div>
     </div>
 
-    <!-- TYPING + SYSTEM -->
-    <div class="ml-[120px] mt-1 flex flex-col gap-1">
+<!-- TYPING + SYSTEM (inline, Telegram-perfect) -->
+<div class="ml-[120px] mt-1 flex items-center gap-2 animate-fadeUp">
 
-        <!-- TYPING -->
-        <div class="flex items-center gap-1 opacity-50 animate-fadeUp">
-            <div class="w-2 h-2 bg-white/50 rounded-full animate-typingDots"></div>
-            <div class="w-2 h-2 bg-white/50 rounded-full animate-typingDots" style="animation-delay: .2s"></div>
-            <div class="w-2 h-2 bg-white/50 rounded-full animate-typingDots" style="animation-delay: .4s"></div>
-        </div>
-
-        <!-- SYSTEM MESSAGE -->
-        <div class="opacity-40 italic text-sm animate-fadeUp">
-            …ждёт, пока вы формулируете вопрос…
-        </div>
-
+    <!-- TYPING -->
+    <div class="flex items-center gap-[3px] opacity-50">
+        <div class="w-[6px] h-[6px] bg-white/35 rounded-full animate-typingDots"></div>
+        <div class="w-[6px] h-[6px] bg-white/35 rounded-full animate-typingDots" style="animation-delay: .2s"></div>
+        <div class="w-[6px] h-[6px] bg-white/35 rounded-full animate-typingDots" style="animation-delay: .4s"></div>
     </div>
+
+    <!-- SYSTEM TEXT -->
+    <div class="text-[17px] italic text-white/35">
+          ㅤ…ждёт, пока вы формулируете вопрос…
+    </div>
+
+</div>
 
     <!-- LONG MESSAGE -->
     <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
