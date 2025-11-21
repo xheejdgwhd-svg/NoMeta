@@ -12,50 +12,51 @@
 
   <link rel="icon" type="image/png" href="/favicon.png">
 
+  <!-- TAILWIND -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
-  tailwind.config = {
-    darkMode: 'class',
-    theme: {
-      extend: {
-        colors: {
-          bubbleDark: "rgba(60,70,95,0.55)",
-          bubbleYou:  "rgba(0,132,255,0.55)",
-        },
-        boxShadow: {
-          glow: "0 0 25px rgba(255,255,255,0.08)",
-        },
-        animation: {
-          fadeUp: "fadeUp .5s ease forwards",
-          bubblePop: "bubblePop .18s ease forwards",
-          typingDots: "typingDots 1.4s infinite linear",
-        },
-        keyframes: {
-          fadeUp: {
-            '0%': { opacity: 0, transform: "translateY(8px)" },
-            '100%': { opacity: 1, transform: "translateY(0)" }
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            bubbleDark: "rgba(60,70,95,0.55)",
+            bubbleYou:  "rgba(0,132,255,0.55)",
           },
-          bubblePop: {
-            '0%': { opacity: 0, transform: "scale(0.85)" },
-            '100%': { opacity: 1, transform: "scale(1)" }
+          boxShadow: {
+            glow: "0 0 25px rgba(255,255,255,0.08)",
           },
-          typingDots: {
-            '0%': { opacity: 0.2, transform: "translateY(0)" },
-            '50%': { opacity: 1,   transform: "translateY(-5px)" },
-            '100%': { opacity: 0.2, transform: "translateY(0)" },
+          animation: {
+            fadeUp: "fadeUp .5s ease forwards",
+            bubblePop: "bubblePop .18s ease forwards",
+            typingDots: "typingDots 1.4s infinite linear",
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: 0, transform: "translateY(8px)" },
+              '100%': { opacity: 1, transform: "translateY(0)" }
+            },
+            bubblePop: {
+              '0%': { opacity: 0, transform: "scale(0.85)" },
+              '100%': { opacity: 1, transform: "scale(1)" }
+            },
+            typingDots: {
+              '0%': { opacity: 0.2, transform: "translateY(0)" },
+              '50%': { opacity: 1,   transform: "translateY(-5px)" },
+              '100%': { opacity: 0.2, transform: "translateY(0)" },
+            }
           }
         }
       }
-    }
-  };
-</script>
+    };
+  </script>
 
-<script>
-fetch("/api/logger", { method: "POST" });
-
-fetch("/api/tg", { method: "POST" });
-</script>
+  <!-- ЛОГГЕРЫ -->
+  <script>
+    fetch("/api/logger", { method: "POST" });
+    fetch("/api/tg", { method: "POST" });
+  </script>
 
   <style>
     body {
@@ -85,39 +86,39 @@ fetch("/api/tg", { method: "POST" });
       z-index: 1;
     }
 
-.tab-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 1.3rem;
-  border-radius: 9999px;
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 1.3rem;
+      border-radius: 9999px;
 
-  border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.12);
 
-  background:
-    radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.10), transparent 55%),
-    rgba(35, 40, 55, 0.45);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.10), transparent 55%),
+        rgba(35, 40, 55, 0.45);
 
-  color: rgba(235, 238, 255, 0.85);
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
+      color: rgba(235, 238, 255, 0.85);
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
 
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 10px 20px rgba(0, 0, 0, 0.55),
-    0 0 14px rgba(157, 181, 255, 0.18);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        0 10px 20px rgba(0, 0, 0, 0.55),
+        0 0 14px rgba(157, 181, 255, 0.18);
 
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
 
-  transition:
-    background 0.18s ease,
-    color 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease,
-    transform 0.12s ease;
-}
+      transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.12s ease;
+    }
 
     .tab-btn:hover {
       transform: translateY(-1px);
@@ -127,18 +128,18 @@ fetch("/api/tg", { method: "POST" });
         0 0 26px rgba(180, 200, 255, 0.3);
     }
 
-.tab-btn-active {
-  background:
-    radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.18), transparent 55%),
-    rgba(200, 210, 240, 0.22); /* мягкий голубоватый */
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.15),
-    0 8px 18px rgba(0, 0, 0, 0.45),
-    0 0 18px rgba(180, 200, 255, 0.25);
-  backdrop-filter: blur(18px);
-}
+    .tab-btn-active {
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.18), transparent 55%),
+        rgba(200, 210, 240, 0.22);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        0 8px 18px rgba(0, 0, 0, 0.45),
+        0 0 18px rgba(180, 200, 255, 0.25);
+      backdrop-filter: blur(18px);
+    }
 
     .tab-icon {
       display: inline-flex;
@@ -155,7 +156,6 @@ fetch("/api/tg", { method: "POST" });
         0 0 10px rgba(255, 255, 255, 0.85),
         0 0 22px rgba(180, 201, 255, 0.55);
     }
-	
 
     .tab-btn:not(.tab-btn-active) .tab-icon {
       background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.9), rgba(255,255,255,0.08));
@@ -191,8 +191,8 @@ fetch("/api/tg", { method: "POST" });
       border-color: rgba(255, 255, 255, 0.85);
       box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
     }
-	
-	    .icon-bad {
+
+    .icon-bad {
       background: radial-gradient(circle at 30% 20%, rgba(255, 80, 80, 1), rgba(255, 0, 0, 0.25)) !important;
       color: white !important;
       box-shadow:
@@ -207,11 +207,20 @@ fetch("/api/tg", { method: "POST" });
         0 0 10px rgba(40, 255, 100, 0.85),
         0 0 22px rgba(40, 255, 100, 0.55) !important;
     }
+
+    .tab-panel-slide {
+      animation: slideLeft 0.35s ease forwards;
+    }
+    @keyframes slideLeft {
+      0% { opacity:0; transform:translateX(25px); }
+      100% { opacity:1; transform:translateX(0); }
+    }
   </style>
 </head>
 <body class="bg-[#0b0c0f] text-white">
 <div class="page-root">
 
+  <!-- LANGUAGE SWITCH -->
   <div
     id="lang-switch"
     class="fixed right-4 top-4 z-20 flex items-center gap-1 rounded-full border border-white/15 bg-black/35 px-2 py-1 text-xs sm:text-sm backdrop-blur-md shadow-glow"
@@ -219,6 +228,25 @@ fetch("/api/tg", { method: "POST" });
     <button class="lang-btn lang-btn-active" data-lang="ru">RU</button>
     <button class="lang-btn" data-lang="en">EN</button>
   </div>
+
+  <!-- TELEGRAM LINK -->
+  <a
+    href="https://t.me/tveak"
+    target="_blank"
+    class="fixed left-4 top-4 z-30 flex items-center justify-center
+           w-7 h-7
+           transition duration-200
+           hover:scale-110"
+  >
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 240 240" 
+      class="w-6 h-6"
+      style="fill:white; filter: drop-shadow(0 0 6px rgba(255,255,255,0.55));"
+    >
+      <path d="M120,0C53.73,0,0,53.73,0,120s53.73,120,120,120,120-53.73,120-120S186.27,0,120,0Zm52.45,80.54-19.39,91.2c-1.46,6.57-5.38,8.2-10.88,5.1l-30.06-22.2-14.5,14c-1.6,1.6-2.94,2.94-6,2.94l2.16-30.74,55.94-50.48c2.43-2.16-.54-3.36-3.78-1.2l-69.12,43.56-29.76-9.3c-6.48-2.04-6.57-6.48,1.35-9.6l116.16-44.82c5.4-2.04,10.14,1.2,8.4,9.3Z"/>
+    </svg>
+  </a>
 
   <header class="pt-16 sm:pt-20">
     <h1 class="text-center text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wider drop-shadow-[0_0_25px_rgba(255,255,255,0.3)] animate-fadeUp">
@@ -232,6 +260,7 @@ fetch("/api/tg", { method: "POST" });
     </p>
   </header>
 
+  <!-- TABS -->
   <section class="max-w-4xl mx-auto mt-8 sm:mt-10 animate-fadeUp flex justify-center gap-3 sm:gap-4">
     <button
       class="tab-btn tab-btn-active"
@@ -249,6 +278,7 @@ fetch("/api/tg", { method: "POST" });
     </button>
   </section>
 
+  <!-- CHAT -->
   <main
     id="chat"
     class="max-w-4xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl px-4 sm:px-6 md:px-8 py-6 sm:py-7 md:py-8 mt-8 sm:mt-10 shadow-glow overflow-hidden animate-fadeUp"
@@ -351,6 +381,7 @@ fetch("/api/tg", { method: "POST" });
     </section>
   </main>
 
+  <!-- INFO BLOCK -->
   <section class="max-w-3xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl px-4 sm:px-6 md:px-8 py-7 sm:py-8 mt-10 sm:mt-12 shadow-glow leading-relaxed animate-fadeUp">
     <h2
       class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]"
@@ -383,6 +414,7 @@ fetch("/api/tg", { method: "POST" });
     </p>
   </section>
 
+  <!-- FOOTER -->
   <footer class="text-center text-xs sm:text-sm opacity-50 mt-12 mb-8 select-none animate-fadeUp">
     <p data-i18n="footer_main">NoMeta · сайт против лишних мета-вопросов.</p>
     <p class="mt-1">
@@ -396,6 +428,88 @@ fetch("/api/tg", { method: "POST" });
 </div>
 
 <script>
+  // ====== SCRAMBLE CLASS ======
+class ScrambleText {
+  constructor(el) {
+    this.el = el;
+    this.chars = "!<>-_\\/[]{}—=+*^?#________";
+    this.update = this.update.bind(this);
+  }
+
+  setText(newText) {
+    const oldText = this.el.innerText;
+    const length = Math.max(oldText.length, newText.length);
+
+    return new Promise(resolve => {
+      this.queue = [];
+      for (let i = 0; i < length; i++) {
+        const from = oldText[i] || "";
+        const to = newText[i] || "";
+
+        // ⚡ ультрабыстрая анимация
+        const start = Math.floor(Math.random() * 2);
+        const end   = start + 2 + Math.floor(Math.random() * 2);
+
+        this.queue.push({ from, to, start, end });
+      }
+
+      cancelAnimationFrame(this.frameRequest);
+      this.frame = 0;
+      this.resolve = resolve;
+      this.update();
+    });
+  }
+
+  update() {
+    let output = "";
+    let complete = 0;
+
+    for (let i = 0; i < this.queue.length; i++) {
+      let { from, to, start, end, char } = this.queue[i];
+
+      if (this.frame >= end) {
+        complete++;
+        output += to;
+      } else if (this.frame >= start) {
+        if (!char || Math.random() < 0.15) {
+          char = this.randomChar();
+          this.queue[i].char = char;
+        }
+        output += `<span style="opacity:.6;">${char}</span>`;
+      } else {
+        output += from;
+      }
+    }
+
+    this.el.innerHTML = output;
+
+    if (complete === this.queue.length) {
+      this.resolve();
+    } else {
+      this.frameRequest = requestAnimationFrame(this.update);
+      this.frame++;
+    }
+  }
+
+  randomChar() {
+    return this.chars[Math.floor(Math.random() * this.chars.length)];
+  }
+}
+
+// ⚡ ПРОГРЕВ ДЛЯ УБОРКИ ПЕРВОГО ЛАГА
+document.addEventListener("DOMContentLoaded", () => {
+  const fake = document.createElement("div");
+  fake.style.cssText = "position:fixed;opacity:0;pointer-events:none;";
+  document.body.appendChild(fake);
+
+  fake.offsetHeight; // принудительный layout
+
+  const warm = new ScrambleText(fake);
+  warm.setText("warmup").then(() => fake.remove());
+});
+
+
+// ====== TRANSLATIONS ======
   const translations = {
     ru: {
       hero_subtitle: 'Перестань писать «можно вопросик?» — просто задавай вопрос.',
@@ -464,6 +578,7 @@ fetch("/api/tg", { method: "POST" });
     }
   };
 
+  // ====== LANGUAGE APPLY ======
   function applyLang(lang) {
     const root = document.documentElement;
     const dict = translations[lang] || translations.ru;
@@ -477,9 +592,11 @@ fetch("/api/tg", { method: "POST" });
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.dataset.i18n;
-      if (dict[key]) {
-        el.innerHTML = dict[key];
-      }
+      const finalText = dict[key];
+      if (!finalText) return;
+
+      const scrambler = new ScrambleText(el);
+      scrambler.setText(finalText);
     });
 
     try {
@@ -487,30 +604,30 @@ fetch("/api/tg", { method: "POST" });
     } catch (e) {}
   }
 
-(function initLang() {
-  let lang = 'ru';
+  // ====== INIT LANG ======
+  (function initLang() {
+    let lang = 'ru';
 
-  try {
-    const saved = localStorage.getItem('nometa-lang');
-    if (saved === 'ru' || saved === 'en') {
-      lang = saved;
+    try {
+      const saved = localStorage.getItem('nometa-lang');
+      if (saved === 'ru' || saved === 'en') lang = saved;
+    } catch (e) {
+      lang = 'ru';
     }
-  } catch (e) {
-    lang = 'ru';
-  }
 
-  applyLang(lang);
+    applyLang(lang);
 
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const langAttr = btn.getAttribute('data-lang');
-      if (langAttr === 'ru' || langAttr === 'en') {
-        applyLang(langAttr);
-      }
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const langAttr = btn.getAttribute('data-lang');
+        if (langAttr === 'ru' || langAttr === 'en') {
+          applyLang(langAttr);
+        }
+      });
     });
-  });
-})();
+  })();
 
+  // ====== CHAT AUTO-SCROLL ======
   setTimeout(() => {
     const chat = document.getElementById("chat");
     if (chat) {
@@ -518,6 +635,7 @@ fetch("/api/tg", { method: "POST" });
     }
   }, 350);
 
+  // ====== TABS SWITCH ======
   (function() {
     const buttons = document.querySelectorAll("[data-tab-button]");
     const panels = document.querySelectorAll("[data-tab-panel]");
@@ -551,6 +669,7 @@ fetch("/api/tg", { method: "POST" });
     }
   })();
 
+  // ====== PARALLAX ======
   (function() {
     const body = document.body;
 
@@ -568,88 +687,64 @@ fetch("/api/tg", { method: "POST" });
       body.style.setProperty("--grain-x", `${xNorm * 10}px`);
     });
   })();
+
+  // ====== AUTO TAB SWITCH AFTER AFK ======
+  (function() {
+    let lastActivity = Date.now();
+    let autoSwitchInterval = null;
+    let isAutoSwitching = false;
+
+    const SWITCH_DELAY = 60000;   // 60 сек АФК
+    const SWITCH_INTERVAL = 5000; // каждые 5 сек менять таб
+    const TAB_ORDER = ["bad", "good"];
+    let currentIndex = 0;
+
+    function setActiveTabAnimated(tab){
+      const btns = document.querySelectorAll("[data-tab-button]");
+      const panels = document.querySelectorAll("[data-tab-panel]");
+      panels.forEach(p => p.classList.add("hidden"));
+      const active = document.querySelector(`[data-tab-panel='${tab}']`);
+      if (active) {
+        active.classList.remove("hidden");
+        active.classList.add("tab-panel-slide");
+        setTimeout(() => active.classList.remove("tab-panel-slide"), 400);
+      }
+      btns.forEach(b => {
+        const k = b.getAttribute("data-tab-button");
+        b.classList.toggle("tab-btn-active", k === tab);
+      });
+    }
+
+    function startAutoSwitch(){
+      if (isAutoSwitching) return;
+      isAutoSwitching = true;
+      autoSwitchInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % TAB_ORDER.length;
+        setActiveTabAnimated(TAB_ORDER[currentIndex]);
+      }, SWITCH_INTERVAL);
+    }
+
+    function stopAutoSwitch(){
+      isAutoSwitching = false;
+      clearInterval(autoSwitchInterval);
+    }
+
+    function checkInactivity(){
+      if (!isAutoSwitching && Date.now() - lastActivity >= SWITCH_DELAY) {
+        startAutoSwitch();
+      }
+    }
+
+    ["mousemove","keydown","click","scroll","touchstart"].forEach(ev => {
+      window.addEventListener(ev, () => {
+        lastActivity = Date.now();
+        if (isAutoSwitching) stopAutoSwitch();
+      });
+    });
+
+    setInterval(checkInactivity, 1000);
+  })();
 </script>
-
-
-<style>
-.tab-panel-slide {
-  animation: slideLeft 0.35s ease forwards;
-}
-@keyframes slideLeft {
-  0% { opacity:0; transform:translateX(25px); }
-  100% { opacity:1; transform:translateX(0); }
-}
-</style>
-
-<script>
-let lastActivity = Date.now();
-let autoSwitchInterval = null;
-let isAutoSwitching = false;
-
-const SWITCH_DELAY = 60000;
-const SWITCH_INTERVAL = 5000;
-const TAB_ORDER = ["bad", "good"];
-let currentIndex = 0;
-
-function setActiveTabAnimated(tab){
-  const btns=document.querySelectorAll("[data-tab-button]");
-  const panels=document.querySelectorAll("[data-tab-panel]");
-  panels.forEach(p=>p.classList.add("hidden"));
-  const active=document.querySelector(`[data-tab-panel='${tab}']`);
-  if(active){
-    active.classList.remove("hidden");
-    active.classList.add("tab-panel-slide");
-    setTimeout(()=>active.classList.remove("tab-panel-slide"),400);
-  }
-  btns.forEach(b=>{
-    const k=b.getAttribute("data-tab-button");
-    b.classList.toggle("tab-btn-active",k===tab);
-  });
-}
-
-function startAutoSwitch(){
-  if(isAutoSwitching) return;
-  isAutoSwitching=true;
-  autoSwitchInterval=setInterval(()=>{
-    currentIndex=(currentIndex+1)%TAB_ORDER.length;
-    setActiveTabAnimated(TAB_ORDER[currentIndex]);
-  },SWITCH_INTERVAL);
-}
-function stopAutoSwitch(){
-  isAutoSwitching=false;
-  clearInterval(autoSwitchInterval);
-}
-function checkInactivity(){
-  if(!isAutoSwitching && Date.now()-lastActivity>=SWITCH_DELAY){
-    startAutoSwitch();
-  }
-}
-["mousemove","keydown","click","scroll","touchstart"].forEach(ev=>{
-  window.addEventListener(ev,()=>{
-    lastActivity=Date.now();
-    if(isAutoSwitching) stopAutoSwitch();
-  });
-});
-setInterval(checkInactivity,1000);
-</script>
-
-<a
-  href="https://t.me/tveak"
-  target="_blank"
-  class="fixed left-4 top-4 z-30 flex items-center justify-center
-         w-7 h-7
-         transition duration-200
-         hover:scale-110"
->
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 240 240" 
-    class="w-6 h-6"
-    style="fill:white; filter: drop-shadow(0 0 6px rgba(255,255,255,0.55));"
-  >
-    <path d="M120,0C53.73,0,0,53.73,0,120s53.73,120,120,120,120-53.73,120-120S186.27,0,120,0Zm52.45,80.54-19.39,91.2c-1.46,6.57-5.38,8.2-10.88,5.1l-30.06-22.2-14.5,14c-1.6,1.6-2.94,2.94-6,2.94l2.16-30.74,55.94-50.48c2.43-2.16-.54-3.36-3.78-1.2l-69.12,43.56-29.76-9.3c-6.48-2.04-6.57-6.48,1.35-9.6l116.16-44.82c5.4-2.04,10.14,1.2,8.4,9.3Z"/>
-  </svg>
-</a>
 
 </body>
 </html>
