@@ -1,9 +1,32 @@
 export default function handler(req, res) {
+  const ua = req.headers["user-agent"] || "unknown";
+
+  // ❌ Фильтр ботов и системных запросов Vercel
+  const botKeywords = [
+    "vercel",
+    "headless",
+    "bot",
+    "crawl",
+    "spider",
+    "curl",
+    "python",
+    "node",
+    "fetch",
+    "wget",
+  ];
+
+  const isBot = botKeywords.some(word =>
+    ua.toLowerCase().includes(word)
+  );
+
+  if (isBot) {
+    return res.status(200).json({ ok: true, bot: true });
+  }
+
+  // ✔ Данные реального пользователя
   const ip =
     req.headers["x-forwarded-for"]?.split(",")[0] ||
     req.socket?.remoteAddress;
-
-  const ua = req.headers["user-agent"] || "unknown";
 
   const info = {
     ip,
