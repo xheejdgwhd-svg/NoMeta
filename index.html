@@ -1,211 +1,649 @@
 <!DOCTYPE html>
 <html lang="ru" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NoMeta</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoMeta</title>
 
-<!-- TAILWIND -->
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="NoMeta — сайт о том, как задавать вопросы без лишних мета-фраз в чатах.">
+  <meta property="og:title" content="NoMeta">
+  <meta property="og:description" content="Перестань писать «можно вопросик?» — задавай вопрос сразу.">
+  <meta property="og:type" content="website">
 
-<!-- TAILWIND CUSTOM CONFIG -->
-<script>
-tailwind.config = {
-    darkMode: 'class',
-    theme: {
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
         extend: {
-            colors: {
-                bubbleDark: "rgba(60,70,95,0.55)",
-                bubbleYou:  "rgba(0,132,255,0.55)",
+          colors: {
+            bubbleDark: "rgba(60,70,95,0.55)",
+            bubbleYou:  "rgba(0,132,255,0.55)",
+          },
+          boxShadow: {
+            glow: "0 0 25px rgba(255,255,255,0.08)",
+          },
+          animation: {
+            fadeUp: "fadeUp .5s ease forwards",
+            bubblePop: "bubblePop .18s ease forwards",
+            typingDots: "typingDots 1.4s infinite linear",
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: 0, transform: "translateY(8px)" },
+              '100%': { opacity: 1, transform: "translateY(0)" }
             },
-            boxShadow: {
-                glow: "0 0 25px rgba(255,255,255,0.08)",
+            bubblePop: {
+              '0%': { opacity: 0, transform: "scale(0.85)" },
+              '100%': { opacity: 1, transform: "scale(1)" }
             },
-            animation: {
-                fadeUp: "fadeUp .5s ease forwards",
-                bubblePop: "bubblePop .18s ease forwards",
-                typingDots: "typingDots 1.4s infinite linear",
-            },
-            keyframes: {
-                fadeUp: {
-                    '0%': { opacity: 0, transform: "translateY(8px)" },
-                    '100%': { opacity: 1, transform: "translateY(0)" }
-                },
-                bubblePop: {
-                    '0%': { opacity: 0, transform: "scale(0.85)" },
-                    '100%': { opacity: 1, transform: "scale(1)" }
-                },
-                typingDots: {
-                    '0%'  : { opacity: 0.2, transform: "translateY(0)" },
-                    '50%' : { opacity: 1,   transform: "translateY(-5px)" },
-                    '100%': { opacity: 0.2, transform: "translateY(0)" },
-                }
+            typingDots: {
+              '0%': { opacity: 0.2, transform: "translateY(0)" },
+              '50%': { opacity: 1,   transform: "translateY(-5px)" },
+              '100%': { opacity: 0.2, transform: "translateY(0)" },
             }
+          }
         }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      position: relative;
+      min-height: 100vh;
+      background-color: #0b0c0f;
+      color: #ffffff;
+      --grain-x: 0px;
+      --grain-y: 0px;
     }
-};
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url('/grain.png');
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+      background-repeat: repeat;
+      background-size: auto;
+      background-position: var(--grain-x, 0px) var(--grain-y, 0px);
+    }
+
+    .page-root {
+      position: relative;
+      z-index: 1;
+    }
+
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1.3rem;
+  border-radius: 9999px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.10), transparent 55%),
+    rgba(35, 40, 55, 0.45);
+
+  color: rgba(235, 238, 255, 0.85);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 10px 20px rgba(0, 0, 0, 0.55),
+    0 0 14px rgba(157, 181, 255, 0.18);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.12s ease;
+}
+
+    .tab-btn:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 16px 32px rgba(0, 0, 0, 0.7),
+        0 0 26px rgba(180, 200, 255, 0.3);
+    }
+
+.tab-btn-active {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.18), transparent 55%),
+    rgba(200, 210, 240, 0.22); /* мягкий голубоватый */
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 8px 18px rgba(0, 0, 0, 0.45),
+    0 0 18px rgba(180, 200, 255, 0.25);
+  backdrop-filter: blur(18px);
+}
+
+    .tab-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,1), rgba(255,255,255,0.18));
+      color: #050711;
+      box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.85),
+        0 0 22px rgba(180, 201, 255, 0.55);
+    }
+	
+
+    .tab-btn:not(.tab-btn-active) .tab-icon {
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.9), rgba(255,255,255,0.08));
+      color: #f5f7ff;
+      box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.6),
+        0 0 18px rgba(140, 168, 255, 0.4);
+    }
+
+    .lang-btn {
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(18, 20, 28, 0.85);
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.7rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.9rem;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+    }
+
+    .lang-btn:hover {
+      transform: translateY(-0.5px);
+      box-shadow: 0 0 14px rgba(255, 255, 255, 0.18);
+    }
+
+    .lang-btn-active {
+      background: rgba(255, 255, 255, 0.96);
+      color: #05060a;
+      border-color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+    }
+	
+	    .icon-bad {
+      background: radial-gradient(circle at 30% 20%, rgba(255, 80, 80, 1), rgba(255, 0, 0, 0.25)) !important;
+      color: white !important;
+      box-shadow:
+        0 0 10px rgba(255, 40, 40, 0.85),
+        0 0 22px rgba(255, 40, 40, 0.55) !important;
+    }
+
+    .icon-good {
+      background: radial-gradient(circle at 30% 20%, rgba(80, 255, 120, 1), rgba(0, 255, 100, 0.25)) !important;
+      color: #041006 !important;
+      box-shadow:
+        0 0 10px rgba(40, 255, 100, 0.85),
+        0 0 22px rgba(40, 255, 100, 0.55) !important;
+    }
+  </style>
+</head>
+<body class="bg-[#0b0c0f] text-white">
+<div class="page-root">
+
+  <div
+    id="lang-switch"
+    class="fixed right-4 top-4 z-20 flex items-center gap-1 rounded-full border border-white/15 bg-black/35 px-2 py-1 text-xs sm:text-sm backdrop-blur-md shadow-glow"
+  >
+    <button class="lang-btn lang-btn-active" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+
+  <header class="pt-16 sm:pt-20">
+    <h1 class="text-center text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wider drop-shadow-[0_0_25px_rgba(255,255,255,0.3)] animate-fadeUp">
+      NoMeta
+    </h1>
+    <p
+      class="mt-4 text-center text-sm sm:text-base text-white/60 px-4 animate-fadeUp"
+      data-i18n="hero_subtitle"
+    >
+      Перестань писать «можно вопросик?» — просто задавай вопрос.
+    </p>
+  </header>
+
+  <section class="max-w-4xl mx-auto mt-8 sm:mt-10 animate-fadeUp flex justify-center gap-3 sm:gap-4">
+    <button
+      class="tab-btn tab-btn-active"
+      data-tab-button="bad"
+    >
+      <span class="tab-icon icon-bad">✕</span>
+      <span data-i18n="tab_bad">Плохо</span>
+    </button>
+    <button
+      class="tab-btn"
+      data-tab-button="good"
+    >
+      <span class="tab-icon icon-good">✓</span>
+      <span data-i18n="tab_good">Хорошо</span>
+    </button>
+  </section>
+
+  <main
+    id="chat"
+    class="max-w-4xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl px-4 sm:px-6 md:px-8 py-6 sm:py-7 md:py-8 mt-8 sm:mt-10 shadow-glow overflow-hidden animate-fadeUp"
+  >
+
+    <section data-tab-panel="bad">
+      <div
+        class="text-red-400 text-2xl sm:text-3xl font-extrabold mb-2 sm:mb-3"
+        data-i18n="bad_title"
+      >
+        Плохо:
+      </div>
+
+      <div class="grid grid-cols-[96px_1fr_56px] items-center my-3 sm:my-4 animate-bubblePop gap-x-2 sm:gap-x-3">
+        <div class="flex items-center gap-2 text-white/70 text-xs sm:text-sm">
+          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-5 h-5 sm:w-6 sm:h-6 opacity-80" alt="">
+          <span data-i18n="label_you">Вы</span>
+        </div>
+        <div class="bg-bubbleYou px-3 sm:px-4 py-2 rounded-2xl shadow-md text-blue-100 max-w-max text-sm sm:text-base" data-i18n="bad_msg1">
+          Привет
+        </div>
+        <div class="text-[10px] sm:text-xs text-white/30 text-right hidden md:block">12:32</div>
+      </div>
+
+      <div class="grid grid-cols-[96px_1fr_56px] items-center my-3 sm:my-4 animate-bubblePop gap-x-2 sm:gap-x-3">
+        <div class="flex items-center gap-2 text-white/70 text-xs sm:text-sm">
+          <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="w-5 h-5 sm:w-6 sm:h-6 opacity-80" alt="">
+          <span data-i18n="label_colleague">Коллега</span>
+        </div>
+        <div class="bg-bubbleDark px-3 sm:px-4 py-2 rounded-2xl text-[#e7eaff] max-w-max shadow-md text-sm sm:text-base" data-i18n="bad_msg2">
+          Привет
+        </div>
+        <div class="text-[10px] sm:text-xs text-white/30 text-right hidden md:block">12:32</div>
+      </div>
+
+      <div class="ml-[96px] mt-1 flex items-center gap-2 animate-fadeUp text-xs sm:text-sm">
+        <div class="flex items-center gap-[3px] opacity-50">
+          <div class="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] bg-white/35 rounded-full animate-typingDots"></div>
+          <div class="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] bg-white/35 rounded-full animate-typingDots" style="animation-delay: .2s"></div>
+          <div class="w-[6px] h-[6px] sm:w-[8px] sm:h-[8px] bg-white/35 rounded-full animate-typingDots" style="animation-delay: .4s"></div>
+        </div>
+
+        <div class="text-[13px] sm:text-[15px] italic text-white/35" data-i18n="typing_text">
+          ㅤ…ждёт, пока вы формулируете вопрос…
+        </div>
+      </div>
+
+      <div class="grid grid-cols-[96px_1fr_56px] items-center my-3 sm:my-4 animate-bubblePop gap-x-2 sm:gap-x-3">
+        <div class="flex items-center gap-2 text-white/70 text-xs sm:text-sm">
+          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-5 h-5 sm:w-6 sm:h-6 opacity-80" alt="">
+          <span data-i18n="label_you">Вы</span>
+        </div>
+        <div class="bg-bubbleYou px-3 sm:px-4 py-2 rounded-2xl shadow-md text-blue-100 max-w-[90%] text-sm sm:text-base" data-i18n="bad_msg3">
+          Я сейчас работаю над тем-то и хочу сделать то-то…
+        </div>
+        <div class="text-[10px] sm:text-xs text-white/30 text-right hidden md:block">12:34</div>
+      </div>
+
+      <div class="grid grid-cols-[96px_1fr_56px] items-center my-3 sm:my-4 animate-bubblePop gap-x-2 sm:gap-x-3">
+        <div class="flex items-center gap-2 text-white/70 text-xs sm:text-sm">
+          <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="w-5 h-5 sm:w-6 sm:h-6 opacity-80" alt="">
+          <span data-i18n="label_colleague">Коллега</span>
+        </div>
+        <div class="bg-bubbleDark px-3 sm:px-4 py-2 rounded-2xl text-[#e7eaff] max-w-[90%] shadow-md text-sm sm:text-base" data-i18n="bad_msg4">
+          Ага, можешь сделать так-то…
+        </div>
+        <div class="text-[10px] sm:text-xs text-white/30 text-right hidden md:block">12:35</div>
+      </div>
+    </section>
+
+    <section data-tab-panel="good" class="hidden">
+      <div
+        class="text-green-400 text-2xl sm:text-3xl font-extrabold mb-2 sm:mb-3"
+        data-i18n="good_title"
+      >
+        Хорошо:
+      </div>
+
+      <div class="grid grid-cols-[96px_1fr_56px] items-center my-3 sm:my-4 animate-bubblePop gap-x-2 sm:gap-x-3">
+        <div class="flex items-center gap-2 text-white/70 text-xs sm:text-sm">
+          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-5 h-5 sm:w-6 sm:h-6 opacity-80" alt="">
+          <span data-i18n="label_you">Вы</span>
+        </div>
+        <div class="bg-bubbleYou px-3 sm:px-4 py-2 rounded-2xl shadow-md text-blue-100 max-w-[90%] text-sm sm:text-base" data-i18n="good_msg1">
+          Привет. Я сейчас работаю над тем-то и хочу сделать то-то…
+        </div>
+        <div class="text-[10px] sm:text-xs text-white/30 text-right hidden md:block">12:32</div>
+      </div>
+
+      <div class="grid grid-cols-[96px_1fr_56px] items-center my-3 sm:my-4 animate-bubblePop gap-x-2 sm:gap-x-3">
+        <div class="flex items-center gap-2 text-white/70 text-xs sm:text-sm">
+          <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="w-5 h-5 sm:w-6 sm:h-6 opacity-80" alt="">
+          <span data-i18n="label_colleague">Коллега</span>
+        </div>
+        <div class="bg-bubbleDark px-3 sm:px-4 py-2 rounded-2xl text-[#e7eaff] max-w-[90%] shadow-md text-sm sm:text-base" data-i18n="good_msg2">
+          Ага, можешь сделать так-то…
+        </div>
+        <div class="text-[10px] sm:text-xs text-white/30 text-right hidden md:block">12:33</div>
+      </div>
+    </section>
+  </main>
+
+  <section class="max-w-3xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl px-4 sm:px-6 md:px-8 py-7 sm:py-8 mt-10 sm:mt-12 shadow-glow leading-relaxed animate-fadeUp">
+    <h2
+      class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]"
+      data-i18n="info_title"
+    >
+      Пожалуйста, не задавайте мета-вопросов в чате!
+    </h2>
+
+    <p class="opacity-90 text-sm sm:text-base">
+      <b data-i18n="info_meta_word">Мета-вопрос</b>
+      <span> — </span>
+      <span data-i18n="info_meta_desc">
+        это вопрос, который подразумевает другие вопросы. Такие сообщения тратят время и ваше, и собеседника.
+      </span>
+    </p>
+
+    <p class="mt-4 mb-2 font-bold opacity-95 text-sm sm:text-base" data-i18n="info_examples_title">
+      Примеры мета-вопросов:
+    </p>
+
+    <ul class="list-disc ml-5 sm:ml-6 space-y-1.5 sm:space-y-2 opacity-90 text-sm sm:text-base">
+      <li data-i18n="info_example1">«Можно ли задать вопрос?»</li>
+      <li data-i18n="info_example2">«Есть кто, кто разбирается в N?»</li>
+      <li data-i18n="info_example3">«А кто-нибудь проходил курс по тому-то?»</li>
+      <li data-i18n="info_example4">«Ребят, есть вопросик по…»</li>
+    </ul>
+
+    <p class="mt-4 opacity-90 text-sm sm:text-base" data-i18n="info_bottom">
+      Лучше сразу писать сам вопрос — собеседник ответит, когда будет свободен.
+    </p>
+  </section>
+
+  <footer class="text-center text-xs sm:text-sm opacity-50 mt-12 mb-8 select-none animate-fadeUp">
+    <p data-i18n="footer_main">NoMeta · сайт против лишних мета-вопросов.</p>
+    <p class="mt-1">
+      © 2025 ·
+      <a href="https://www.tveak.xyz" class="underline underline-offset-2 hover:opacity-80" target="_blank" rel="noreferrer">
+        tveak.xyz
+      </a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  const translations = {
+    ru: {
+      hero_subtitle: 'Перестань писать «можно вопросик?» — просто задавай вопрос.',
+      tab_bad: 'Плохо',
+      tab_good: 'Хорошо',
+
+      bad_title: 'Плохо:',
+      good_title: 'Хорошо:',
+
+      label_you: 'Вы',
+      label_colleague: 'Коллега',
+
+      bad_msg1: 'Привет',
+      bad_msg2: 'Привет',
+      typing_text: 'ㅤ…ждёт, пока вы формулируете вопрос…',
+      bad_msg3: 'Я сейчас работаю над тем-то и хочу сделать то-то…',
+      bad_msg4: 'Ага, можешь сделать так-то…',
+
+      good_msg1: 'Привет. Я сейчас работаю над тем-то и хочу сделать то-то…',
+      good_msg2: 'Ага, можешь сделать так-то…',
+
+      info_title: 'Пожалуйста, не задавайте мета-вопросов в чате!',
+      info_meta_word: 'Мета-вопрос',
+      info_meta_desc: 'это вопрос, который подразумевает другие вопросы. Такие сообщения тратят время и ваше, и собеседника.',
+      info_examples_title: 'Примеры мета-вопросов:',
+      info_example1: '«Можно ли задать вопрос?»',
+      info_example2: '«Есть кто, кто разбирается в N?»',
+      info_example3: '«А кто-нибудь проходил курс по тому-то?»',
+      info_example4: '«Ребят, есть вопросик по…»',
+      info_bottom: 'Лучше сразу писать сам вопрос — собеседник ответит, когда будет свободен.',
+
+      footer_main: 'NoMeta · сайт против лишних мета-вопросов.'
+    },
+
+    en: {
+      hero_subtitle: 'Stop writing “can I ask a question?” — just ask the question.',
+      tab_bad: 'Bad',
+      tab_good: 'Good',
+
+      bad_title: 'Bad:',
+      good_title: 'Good:',
+
+      label_you: 'You',
+      label_colleague: 'Colleague',
+
+      bad_msg1: 'Hi',
+      bad_msg2: 'Hi',
+      typing_text: '…is waiting while you are formulating the question…',
+      bad_msg3: 'Right now I’m working on something and I want to do this and that…',
+      bad_msg4: 'Yeah, you can do it like this…',
+
+      good_msg1: 'Hi. I’m working on something right now and I want to do this and that…',
+      good_msg2: 'Yeah, you can do it like this…',
+
+      info_title: 'Please don’t ask meta-questions in chat!',
+      info_meta_word: 'A meta-question',
+      info_meta_desc: 'is a question that implies other questions. Messages like that waste both your time and the other person’s.',
+      info_examples_title: 'Examples of meta-questions:',
+      info_example1: '“Can I ask a question?”',
+      info_example2: '“Is there anyone here who knows about N?”',
+      info_example3: '“Has anyone taken a course about this?”',
+      info_example4: '“Guys, I have a little question about…”',
+      info_bottom: 'It’s better to write the actual question right away — the other person will answer when they are free.',
+
+      footer_main: 'NoMeta · a site against unnecessary meta-questions.'
+    }
+  };
+
+  function applyLang(lang) {
+    const root = document.documentElement;
+    const dict = translations[lang] || translations.ru;
+
+    root.setAttribute('lang', lang);
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      const isActive = btn.getAttribute('data-lang') === lang;
+      btn.classList.toggle('lang-btn-active', isActive);
+    });
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (dict[key]) {
+        el.innerHTML = dict[key];
+      }
+    });
+
+    try {
+      localStorage.setItem('nometa-lang', lang);
+    } catch (e) {}
+  }
+
+(function initLang() {
+  let lang = 'ru';
+
+  try {
+    const saved = localStorage.getItem('nometa-lang');
+    if (saved === 'ru' || saved === 'en') {
+      lang = saved;
+    }
+  } catch (e) {
+    lang = 'ru';
+  }
+
+  applyLang(lang);
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const langAttr = btn.getAttribute('data-lang');
+      if (langAttr === 'ru' || langAttr === 'en') {
+        applyLang(langAttr);
+      }
+    });
+  });
+})();
+
+  setTimeout(() => {
+    const chat = document.getElementById("chat");
+    if (chat) {
+      chat.scrollTo({ top: chat.scrollHeight, behavior: "smooth" });
+    }
+  }, 350);
+
+  (function() {
+    const buttons = document.querySelectorAll("[data-tab-button]");
+    const panels = document.querySelectorAll("[data-tab-panel]");
+
+    function setActive(tab) {
+      buttons.forEach(btn => {
+        const key = btn.getAttribute("data-tab-button");
+        const isActive = key === tab;
+        btn.classList.toggle("tab-btn-active", isActive);
+      });
+
+      panels.forEach(panel => {
+        const key = panel.getAttribute("data-tab-panel");
+        if (key === tab) {
+          panel.classList.remove("hidden");
+        } else {
+          panel.classList.add("hidden");
+        }
+      });
+    }
+
+    if (buttons.length) {
+      setActive("bad");
+
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const tab = btn.getAttribute("data-tab-button");
+          if (tab) setActive(tab);
+        });
+      });
+    }
+  })();
+
+  (function() {
+    const body = document.body;
+
+    function updateScrollParallax() {
+      const y = window.scrollY || 0;
+      body.style.setProperty("--grain-y", `${-y * 0.15}px`);
+    }
+
+    window.addEventListener("scroll", updateScrollParallax, { passive: true });
+    updateScrollParallax();
+
+    window.addEventListener("mousemove", (e) => {
+      const xNorm = (e.clientX / window.innerWidth) - 0.5;
+      const yNorm = (e.clientY / window.innerHeight) - 0.5;
+      body.style.setProperty("--grain-x", `${xNorm * 10}px`);
+    });
+  })();
 </script>
 
+
 <style>
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: url('/grain.png');
-    opacity: 0.05;
-    pointer-events: none;
-    z-index: 0;
+.tab-panel-slide {
+  animation: slideLeft 0.35s ease forwards;
+}
+@keyframes slideLeft {
+  0% { opacity:0; transform:translateX(25px); }
+  100% { opacity:1; transform:translateX(0); }
 }
 </style>
 
-</head>
-<body class="bg-[#0b0c0f] text-white">
-
-<!-- TITLE -->
-<h1 class="text-center mt-10 text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-[0_0_25px_rgba(255,255,255,0.3)] animate-fadeUp">
-    NoMeta
-</h1>
-
-<!-- CHAT WRAPPER -->
-<div id="chat" class="max-w-4xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 mt-12 shadow-glow overflow-hidden animate-fadeUp">
-
-    <!-- BAD -->
-    <div class="text-red-400 text-3xl font-extrabold">Плохо:</div>
-
-    <!-- YOU -->
-    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
-        <div class="flex items-center gap-2 text-white/70">
-            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-6 h-6 opacity-80">
-            Вы
-        </div>
-        <div class="bg-bubbleYou px-4 py-2 rounded-2xl shadow-md text-blue-100 max-w-max">
-            Привет
-        </div>
-        <div class="text-sm text-white/30 text-right">12:32</div>
-    </div>
-
-    <!-- COLLEAGUE -->
-    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
-        <div class="flex items-center gap-2 text-white/70">
-            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="w-6 h-6 opacity-80">
-            Коллега
-        </div>
-        <div class="bg-bubbleDark px-4 py-2 rounded-2xl text-[#e7eaff] max-w-max shadow-md">
-            Привет
-        </div>
-        <div class="text-sm text-white/30 text-right">12:32</div>
-    </div>
-
-<!-- TYPING + SYSTEM (inline, Telegram-perfect) -->
-<div class="ml-[120px] mt-1 flex items-center gap-2 animate-fadeUp">
-
-    <!-- TYPING -->
-    <div class="flex items-center gap-[3px] opacity-50">
-        <div class="w-[8px] h-[8px] bg-white/35 rounded-full animate-typingDots"></div>
-        <div class="w-[8px] h-[8px] bg-white/35 rounded-full animate-typingDots" style="animation-delay: .2s"></div>
-        <div class="w-[8px] h-[8px] bg-white/35 rounded-full animate-typingDots" style="animation-delay: .4s"></div>
-    </div>
-
-    <!-- SYSTEM TEXT -->
-    <div class="text-[17px] italic text-white/35">
-          ㅤ…ждёт, пока вы формулируете вопрос…
-    </div>
-
-</div>
-
-    <!-- LONG MESSAGE -->
-    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
-        <div class="flex items-center gap-2 text-white/70">
-            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-6 h-6 opacity-80">
-            Вы
-        </div>
-        <div class="bg-bubbleYou px-4 py-2 rounded-2xl shadow-md text-blue-100 max-w-max">
-            Я сейчас работаю над тем-то и хочу сделать то-то…
-        </div>
-        <div class="text-sm text-white/30 text-right">12:34</div>
-    </div>
-
-    <!-- LAST -->
-    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
-        <div class="flex items-center gap-2 text-white/70">
-            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="w-6 h-6 opacity-80">
-            Коллега
-        </div>
-        <div class="bg-bubbleDark px-4 py-2 rounded-2xl text-[#e7eaff] max-w-max shadow-md">
-            Ага, можешь сделать так-то…
-        </div>
-        <div class="text-sm text-white/30 text-right">12:35</div>
-    </div>
-
-    <!-- DIVIDER -->
-    <div class="w-full h-[1px] bg-white/10 my-6"></div>
-
-    <!-- GOOD -->
-    <div class="text-green-400 text-3xl font-extrabold">Хорошо:</div>
-
-    <!-- YOU GOOD -->
-    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
-        <div class="flex items-center gap-2 text-white/70">
-            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-6 h-6 opacity-80">
-            Вы
-        </div>
-        <div class="bg-bubbleYou px-4 py-2 rounded-2xl shadow-md text-blue-100 max-w-max">
-            Привет. Я сейчас работаю над тем-то и хочу сделать то-то…
-        </div>
-        <div class="text-sm text-white/30 text-right">12:32</div>
-    </div>
-
-    <!-- COLLEAGUE GOOD -->
-    <div class="grid grid-cols-[120px_1fr_60px] items-center my-4 animate-bubblePop">
-        <div class="flex items-center gap-2 text-white/70">
-            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" class="w-6 h-6 opacity-80">
-            Коллега
-        </div>
-        <div class="bg-bubbleDark px-4 py-2 rounded-2xl text-[#e7eaff] max-w-max shadow-md">
-            Ага, можешь сделать так-то…
-        </div>
-        <div class="text-sm text-white/30 text-right">12:33</div>
-    </div>
-
-</div>
-
-<!-- INFO BOX -->
-<div class="max-w-3xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 mt-14 shadow-glow leading-relaxed animate-fadeUp">
-
-    <h2 class="text-4xl font-extrabold mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-        Пожалуйста, не задавайте мета-вопросов в чате!
-    </h2>
-
-    <p class="opacity-90">
-        <b>Мета-вопрос</b> - это вопрос, который подразумевает другие вопросы.
-        Такие сообщения тратят время и ваше, и собеседника.
-    </p>
-
-    <p class="mt-4 mb-2 font-bold opacity-95">Примеры мета-вопросов:</p>
-
-    <ul class="list-disc ml-6 space-y-2 opacity-90">
-        <li>«Можно ли задать вопрос?»</li>
-        <li>«Есть кто, кто разбирается в N?»</li>
-        <li>«А кто-нибудь проходил курс по тому-то?»</li>
-        <li>«Ребят, есть вопросик по…»</li>
-    </ul>
-
-    <p class="mt-4 opacity-90">
-        Лучше сразу писать сам вопрос - собеседник ответит, когда будет свободен.
-    </p>
-</div>
-
-<footer class="text-center opacity-40 mt-16 mb-10 select-none">
-    All rights reserved © 1481 - 2025
-</footer>
-
-<!-- AUTO SCROLL -->
 <script>
-setTimeout(() => {
-    const chat = document.getElementById("chat");
-    chat.scrollTo({ top: chat.scrollHeight, behavior: "smooth" });
-}, 350);
+let lastActivity = Date.now();
+let autoSwitchInterval = null;
+let isAutoSwitching = false;
+
+const SWITCH_DELAY = 60000;
+const SWITCH_INTERVAL = 5000;
+const TAB_ORDER = ["bad", "good"];
+let currentIndex = 0;
+
+function setActiveTabAnimated(tab){
+  const btns=document.querySelectorAll("[data-tab-button]");
+  const panels=document.querySelectorAll("[data-tab-panel]");
+  panels.forEach(p=>p.classList.add("hidden"));
+  const active=document.querySelector(`[data-tab-panel='${tab}']`);
+  if(active){
+    active.classList.remove("hidden");
+    active.classList.add("tab-panel-slide");
+    setTimeout(()=>active.classList.remove("tab-panel-slide"),400);
+  }
+  btns.forEach(b=>{
+    const k=b.getAttribute("data-tab-button");
+    b.classList.toggle("tab-btn-active",k===tab);
+  });
+}
+
+function startAutoSwitch(){
+  if(isAutoSwitching) return;
+  isAutoSwitching=true;
+  autoSwitchInterval=setInterval(()=>{
+    currentIndex=(currentIndex+1)%TAB_ORDER.length;
+    setActiveTabAnimated(TAB_ORDER[currentIndex]);
+  },SWITCH_INTERVAL);
+}
+function stopAutoSwitch(){
+  isAutoSwitching=false;
+  clearInterval(autoSwitchInterval);
+}
+function checkInactivity(){
+  if(!isAutoSwitching && Date.now()-lastActivity>=SWITCH_DELAY){
+    startAutoSwitch();
+  }
+}
+["mousemove","keydown","click","scroll","touchstart"].forEach(ev=>{
+  window.addEventListener(ev,()=>{
+    lastActivity=Date.now();
+    if(isAutoSwitching) stopAutoSwitch();
+  });
+});
+setInterval(checkInactivity,1000);
 </script>
+
+<a
+  href="https://t.me/tveak"
+  target="_blank"
+  class="fixed left-4 top-4 z-30 flex items-center justify-center
+         w-7 h-7
+         transition duration-200
+         hover:scale-110"
+>
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 240 240" 
+    class="w-6 h-6"
+    style="fill:white; filter: drop-shadow(0 0 6px rgba(255,255,255,0.55));"
+  >
+    <path d="M120,0C53.73,0,0,53.73,0,120s53.73,120,120,120,120-53.73,120-120S186.27,0,120,0Zm52.45,80.54-19.39,91.2c-1.46,6.57-5.38,8.2-10.88,5.1l-30.06-22.2-14.5,14c-1.6,1.6-2.94,2.94-6,2.94l2.16-30.74,55.94-50.48c2.43-2.16-.54-3.36-3.78-1.2l-69.12,43.56-29.76-9.3c-6.48-2.04-6.57-6.48,1.35-9.6l116.16-44.82c5.4-2.04,10.14,1.2,8.4,9.3Z"/>
+  </svg>
+</a>
 
 </body>
 </html>
