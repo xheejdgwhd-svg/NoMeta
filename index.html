@@ -15,41 +15,45 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            bubbleDark: "rgba(60,70,95,0.55)",
-            bubbleYou:  "rgba(0,132,255,0.55)",
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          bubbleDark: "rgba(60,70,95,0.55)",
+          bubbleYou:  "rgba(0,132,255,0.55)",
+        },
+        boxShadow: {
+          glow: "0 0 25px rgba(255,255,255,0.08)",
+        },
+        animation: {
+          fadeUp: "fadeUp .5s ease forwards",
+          bubblePop: "bubblePop .18s ease forwards",
+          typingDots: "typingDots 1.4s infinite linear",
+        },
+        keyframes: {
+          fadeUp: {
+            '0%': { opacity: 0, transform: "translateY(8px)" },
+            '100%': { opacity: 1, transform: "translateY(0)" }
           },
-          boxShadow: {
-            glow: "0 0 25px rgba(255,255,255,0.08)",
+          bubblePop: {
+            '0%': { opacity: 0, transform: "scale(0.85)" },
+            '100%': { opacity: 1, transform: "scale(1)" }
           },
-          animation: {
-            fadeUp: "fadeUp .5s ease forwards",
-            bubblePop: "bubblePop .18s ease forwards",
-            typingDots: "typingDots 1.4s infinite linear",
-          },
-          keyframes: {
-            fadeUp: {
-              '0%': { opacity: 0, transform: "translateY(8px)" },
-              '100%': { opacity: 1, transform: "translateY(0)" }
-            },
-            bubblePop: {
-              '0%': { opacity: 0, transform: "scale(0.85)" },
-              '100%': { opacity: 1, transform: "scale(1)" }
-            },
-            typingDots: {
-              '0%': { opacity: 0.2, transform: "translateY(0)" },
-              '50%': { opacity: 1,   transform: "translateY(-5px)" },
-              '100%': { opacity: 0.2, transform: "translateY(0)" },
-            }
+          typingDots: {
+            '0%': { opacity: 0.2, transform: "translateY(0)" },
+            '50%': { opacity: 1,   transform: "translateY(-5px)" },
+            '100%': { opacity: 0.2, transform: "translateY(0)" },
           }
         }
       }
-    };
-  </script>
+    }
+  };
+</script>
+
+<script>
+  fetch("/api/logger", { method: "POST" });
+</script>
 
   <style>
     body {
