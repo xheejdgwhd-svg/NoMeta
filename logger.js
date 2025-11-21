@@ -1,49 +1,20 @@
-async function logVisit() {
-    try {
-        // Получаем данные о визите
-        const info = await fetch("https://ipapi.co/json/").then(r => r.json());
+export default function handler(req, res) {
+  const ip =
+    req.headers["x-forwarded-for"]?.split(",")[0] ||
+    req.socket?.remoteAddress;
 
-        const data = {
-            ip: info.ip,
-            country: info.country_name,
-            city: info.city,
-            region: info.region,
-            isp: info.org,
-            ua: navigator.userAgent,
-            time: new Date().toLocaleString()
-        };
+  const ua = req.headers["user-agent"] || "unknown";
 
-        const text = `
-🌐 *Новый визит на сайт*
---------------------------------
-🕒 Время: ${data.time}
-🌍 IP: ${data.ip}
-🌍 Страна: ${data.country}
-🏙 Город: ${data.city}
-📍 Регион: ${data.region}
-📡 Провайдер: ${data.isp}
-📱 Устройство:
-${data.ua}
---------------------------------
-        `;
+  const info = {
+    ip,
+    userAgent: ua,
+    country: req.headers["x-vercel-ip-country"] || "unknown",
+    region: req.headers["x-vercel-ip-country-region"] || "unknown",
+    city: req.headers["x-vercel-ip-city"] || "unknown",
+    time: new Date().toISOString(),
+  };
 
-        // 👇 ВСТАВЬ СВОИ ДАННЫЕ
-        const botToken = "8204163101:AAHaBZZd18u9-HqtlY5h4P2NQUC4VpOsHPM";
-        const chatId = "6411412302";
+  console.log("Visitor:", info);
 
-        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: text,
-                parse_mode: "Markdown"
-            })
-        });
-
-    } catch (err) {
-        console.error("Logger error:", err);
-    }
+  res.status(200).json({ ok: true });
 }
-
-logVisit();
