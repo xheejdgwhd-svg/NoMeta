@@ -622,6 +622,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const langAttr = btn.getAttribute('data-lang');
         if (langAttr === 'ru' || langAttr === 'en') {
           applyLang(langAttr);
+          playSfx("lang");
         }
       });
     });
@@ -661,10 +662,11 @@ document.addEventListener("DOMContentLoaded", () => {
       setActive("bad");
 
       buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const tab = btn.getAttribute("data-tab-button");
-          if (tab) setActive(tab);
-        });
+btn.addEventListener("click", () => {
+  const tab = btn.getAttribute("data-tab-button");
+  if (tab) setActive(tab);
+  playSfx("tab");
+});
       });
     }
   })();
@@ -744,7 +746,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInterval(checkInactivity, 1000);
   })();
+
+  function playSfx(type) {
+  const map = {
+    tab: document.getElementById("sfx-tab"),
+    lang: document.getElementById("sfx-lang"),
+  };
+
+  const s = map[type];
+  if (!s) return;
+
+  s.volume = 0.25;       // тихо
+  s.currentTime = 0;     // чтобы всегда начинался сразу
+  s.play().catch(() => {}); // чтобы не было ошибок если браузер заблокировал звук
+}
+  
 </script>
+  
+<audio id="sfx-tab" src="/sfx/tab.mp3" preload="auto"></audio>
+<audio id="sfx-lang" src="/sfx/lang.mp3" preload="auto"></audio>
 
 </body>
 </html>
