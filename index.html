@@ -216,6 +216,23 @@
       0% { opacity:0; transform:translateX(25px); }
       100% { opacity:1; transform:translateX(0); }
     }
+
+@keyframes dividerAppear {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.4);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+    filter: blur(0);
+  }
+}
+
+.animate-dividerAppear {
+  animation: dividerAppear 0.9s ease-out forwards;
+}
   </style>
 </head>
 <body class="bg-[#0b0c0f] text-white">
@@ -261,8 +278,13 @@
     </p>
   </header>
 
-	<div class="w-full flex justify-center mt-6 mb-4">
-  <div class="h-[2px] w-[85%] bg-gradient-to-r from-transparent via-red-500/70 to-transparent shadow-[0_0_18px_rgba(255,20,20,0.5)]"></div>
+<div class="w-full flex justify-center mt-8 mb-6 animate-dividerAppear">
+  <div class="h-[2px] w-[85%] bg-gradient-to-r 
+              from-transparent 
+              via-white/25 
+              to-transparent 
+              shadow-[0_0_18px_rgba(255,255,255,0.13)]">
+  </div>
 </div>
 
   <!-- TABS -->
