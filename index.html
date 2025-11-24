@@ -279,17 +279,20 @@
     </button>
   </section>
   
-  <div class="mt-6 flex justify-center animate-fadeUp">
-  <button
-    id="dont-press-btn"
-    class="px-6 py-3 rounded-full font-bold text-sm sm:text-base
-           bg-red-600/80 text-white shadow-glow border border-red-400/40
-           backdrop-blur-md
-           transition-all duration-200
-           hover:bg-red-700 hover:scale-105
-           active:scale-95"
-  >
-    НЕ НАЖИМАЙ!
+<!-- RANDOM BUTTON -->
+<button
+  id="dont-press-btn"
+  class="px-6 py-3 rounded-full font-bold text-sm sm:text-base
+         bg-red-600/80 text-white shadow-glow border border-red-400/40
+         backdrop-blur-md
+         transition-all duration-200
+         hover:bg-red-700 hover:scale-105
+         active:scale-95
+         fixed z-[9999]"
+  style="left:50%; top:50%; transform:translate(-50%, -50%);"
+>
+  НЕ НАЖИМАЙ!
+</button>
   </button>
 </div>
 
@@ -775,6 +778,24 @@ btn.addEventListener("click", () => {
   s.currentTime = 0;     // чтобы всегда начинался сразу
   s.play().catch(() => {}); // чтобы не было ошибок если браузер заблокировал звук
 }
+
+function randomizeButtonPosition() {
+  const btn = document.getElementById("dont-press-btn");
+
+  const padding = 20; // отступ от краёв
+  const maxX = window.innerWidth - btn.offsetWidth - padding;
+  const maxY = window.innerHeight - btn.offsetHeight - padding;
+
+  const x = Math.random() * maxX + padding;
+  const y = Math.random() * maxY + padding;
+
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+  btn.style.transform = "none";
+}
+
+window.addEventListener("load", randomizeButtonPosition);
+window.addEventListener("resize", randomizeButtonPosition);
   
 </script>
   
