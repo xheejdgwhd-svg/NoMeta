@@ -778,58 +778,11 @@ btn.addEventListener("click", () => {
   s.currentTime = 0;     // чтобы всегда начинался сразу
   s.play().catch(() => {}); // чтобы не было ошибок если браузер заблокировал звук
 }
-
-function randomizeButtonPosition() {
-  const btn = document.getElementById("dont-press-btn");
-
-  const padding = 20; // отступ от краёв
-  const maxX = window.innerWidth - btn.offsetWidth - padding;
-  const maxY = window.innerHeight - btn.offsetHeight - padding;
-
-  const x = Math.random() * maxX + padding;
-  const y = Math.random() * maxY + padding;
-
-  btn.style.left = x + "px";
-  btn.style.top = y + "px";
-  btn.style.transform = "none";
-}
-
-window.addEventListener("load", randomizeButtonPosition);
-window.addEventListener("resize", randomizeButtonPosition);
-  
+ 
 </script>
   
 <audio id="sfx-tab" src="/sfx/tab.mp3" preload="auto"></audio>
 <audio id="sfx-lang" src="/sfx/lang.mp3" preload="auto"></audio>
-
-<video id="og-video" src="/og.mp4" style="display:none;" preload="auto"></video>
-
-<script>
-document.getElementById("dont-press-btn")?.addEventListener("click", async () => {
-  const video = document.getElementById("og-video");
-
-  // сделать видимым (важно!)
-  video.style.display = "block";
-  video.muted = false; // можно выключить, если хочешь с громкостью
-  video.play().catch(() => {}); // ИНИЦИАЛЬНЫЙ старт (разрешён!)
-
-  try {
-    // теперь fullscreen пропустится, потому что видео "тронуто"
-    if (video.requestFullscreen) {
-      await video.requestFullscreen();
-    } else if (video.webkitRequestFullscreen) { 
-      await video.webkitRequestFullscreen();
-    } else if (video.msRequestFullscreen) { 
-      await video.msRequestFullscreen();
-    }
-
-    await video.play();
-  } catch (e) {
-    console.log(e);
-    alert("Повезло тебе");
-  }
-});
-</script>
 
 </body>
 </html>
