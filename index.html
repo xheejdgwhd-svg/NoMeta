@@ -787,9 +787,13 @@ btn.addEventListener("click", () => {
 document.getElementById("dont-press-btn")?.addEventListener("click", async () => {
   const video = document.getElementById("og-video");
 
+  // сделать видимым (важно!)
   video.style.display = "block";
+  video.muted = false; // можно выключить, если хочешь с громкостью
+  video.play().catch(() => {}); // ИНИЦИАЛЬНЫЙ старт (разрешён!)
 
   try {
+    // теперь fullscreen пропустится, потому что видео "тронуто"
     if (video.requestFullscreen) {
       await video.requestFullscreen();
     } else if (video.webkitRequestFullscreen) { 
@@ -800,7 +804,8 @@ document.getElementById("dont-press-btn")?.addEventListener("click", async () =>
 
     await video.play();
   } catch (e) {
-    alert("Браузер заблокировал авто-фуллскрин или авто-play 😓");
+    console.log(e);
+    alert("Браузер всё ещё блокирует fullscreen 😓");
   }
 });
 </script>
