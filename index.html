@@ -51,29 +51,6 @@
       }
     };
 	
-	document.getElementById("dont-press-btn")?.addEventListener("click", async () => {
-  const video = document.getElementById("og-video");
-
-  // сделать видимым
-  video.style.display = "block";
-
-  try {
-    // fullscreen
-    if (video.requestFullscreen) {
-      await video.requestFullscreen();
-    } else if (video.webkitRequestFullscreen) { 
-      await video.webkitRequestFullscreen();
-    } else if (video.msRequestFullscreen) { 
-      await video.msRequestFullscreen();
-    }
-
-    // автозапуск
-    await video.play();
-  } catch (e) {
-    alert("Браузер заблокировал авто-фуллскрин или авто-play 😓");
-  }
-});
-
   </script>
 
   <!-- ЛОГГЕРЫ -->
@@ -805,6 +782,28 @@ btn.addEventListener("click", () => {
 <audio id="sfx-lang" src="/sfx/lang.mp3" preload="auto"></audio>
 
 <video id="og-video" src="/og.mp4" style="display:none;" preload="auto"></video>
+
+<script>
+document.getElementById("dont-press-btn")?.addEventListener("click", async () => {
+  const video = document.getElementById("og-video");
+
+  video.style.display = "block";
+
+  try {
+    if (video.requestFullscreen) {
+      await video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) { 
+      await video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) { 
+      await video.msRequestFullscreen();
+    }
+
+    await video.play();
+  } catch (e) {
+    alert("Браузер заблокировал авто-фуллскрин или авто-play 😓");
+  }
+});
+</script>
 
 </body>
 </html>
